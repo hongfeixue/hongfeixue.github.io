@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="Hexo">
+  <link 
+    rel="icon" 
+    href="/img/catton.jpg">
+  <title>02 类与对象的基本概念</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="02 类与对象的基本概念">
+    
+    
+      <meta 
+        property="og:url" 
+        content="http://example.com/2021/08/05/02-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/index.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="img/catton.jpg">
+    
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2021-08-05">
+      <meta 
+        property="og:article:modified_time" 
+        content="2021-08-05">
+      <meta 
+        property="og:article:author" 
+        content="xuehongfei">
+      
+        
+      
+    
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+        <img 
+          class="navbar-logo-img"
+          width="32"
+          height="32"
+          src="/img/catton.jpg" 
+          alt="blog logo">
+      
+      <span class="navbar-logo-dsc">Mr.Xue's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          Home
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          Archive
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          Tags
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          Categories
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          About
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          Friends
+        
+      </a>
+    
+    <a 
+      class="navbar-menu-item darknavbar" 
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </a>
+    <a 
+      class="navbar-menu-item searchnavbar" 
+      id="search">
+      <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i>
+    </a>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      02 类与对象的基本概念
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-08-05T01:30:10.554Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2021-08-05</span>
+    </time>
+    
+    
+      <span class="dot"></span>
+      <span>7.5k words</span>
+    
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <h1 id="第二章-类与对象的基本概念"><a href="#第二章-类与对象的基本概念" class="headerlink" title="第二章 类与对象的基本概念"></a>第二章 类与对象的基本概念</h1><h2 id="一、面向对象的程序设计方法概述"><a href="#一、面向对象的程序设计方法概述" class="headerlink" title="一、面向对象的程序设计方法概述"></a>一、面向对象的程序设计方法概述</h2><p>面向对象的程序设计</p>
+<ul>
+<li>与结构化程序设计相比，更符合人类认识现实世界的思维方式</li>
+<li>已成为程序设计的主流方式</li>
+<li>涉及的抽象概念：抽象，封装，继承，多态</li>
+</ul>
+<h3 id="1-面向对象的程序设计方法概述"><a href="#1-面向对象的程序设计方法概述" class="headerlink" title="1.面向对象的程序设计方法概述"></a>1.面向对象的程序设计方法概述</h3><h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><p>现实世界中，万物皆对象，都具有各自的属性，对世界都呈现各自的行为</p>
+<p>程序中，一切都是对象，都具有标识，属性和行为（方法），通过一个或多个变量来保存其状态，通过方法实现他的行为。</p>
+<h4 id="类"><a href="#类" class="headerlink" title="类"></a>类</h4><p>将属性及行为相同或相似的对象归为一类</p>
+<p>类可以看成是对象的抽象，代表了此类对象所具有的共同属性和行为</p>
+<p>在面向对象的程序设计中，每一个对象都属于某个特定的类</p>
+<h4 id="结构化程序设计"><a href="#结构化程序设计" class="headerlink" title="结构化程序设计"></a>结构化程序设计</h4><p>通常由若干个程序模块组成，每个程序模块都可以是子程序或函数</p>
+<p>数据和功能分离，代码难于维护和复用</p>
+<h4 id="面向对象程序设计"><a href="#面向对象程序设计" class="headerlink" title="面向对象程序设计"></a>面向对象程序设计</h4><p>基本组成单位是类</p>
+<p>程序在运行时由类生成对象，对象是面向对象程序的核心</p>
+<p>对象之间通过发送消息进行通信，互相协作完成相应功能</p>
+<h4 id="1-抽象"><a href="#1-抽象" class="headerlink" title="1.抽象"></a>1.抽象</h4><p>抽象：忽略问题中与当前目标无关的方面，以便更充分地注意与当前目标有关的方面。</p>
+<p>过程抽象：将整个系统的功能划分为若干部分，强调功能完成的过程和步骤，而隐藏其具体的实现。    C语言的函数，Java语言的方法。</p>
+<p>数据抽象：面向对象软件开发方法的主要特点。    将系统中需要处理的数据和这些数据上的操作结 合在一起，抽象成不同的抽象数据类型—类。类 既包括数据，也包括对数据的操作。</p>
+<h4 id="2-封装"><a href="#2-封装" class="headerlink" title="2.封装"></a>2.封装</h4><p>封装：</p>
+<p>是一种信息隐蔽技术；</p>
+<p>利用抽象数据类型将数据和基于数据的操作封装在一起；</p>
+<p>用户只能看到对象的封装界面信息，对象的内部细节对用户是隐蔽的；</p>
+<p>封装的目的在于将对象的使用者和设计者分开，使用者不必知道行为实现的细节，只需使用设计者提供的消息来访问对象。</p>
+<p>封装的定义：清楚的边界（所有对象的内部信息被限定在这个边界内）；接口（对象向外界提供的方法，外界可以通过这些方法与对象进行交互）；受保护的内部实现（功能的实现细节，不能从类外访问）。</p>
+<p>类的示意图，体现了封装和数据抽象。</p>
+<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518112706523.png" alt="image-20210518112706523" style="zoom: 50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518112706523.png" class="lozad post-image">
+
+<h4 id="3-继承"><a href="#3-继承" class="headerlink" title="3.继承"></a>3.继承</h4><p>是指新的类可以获得已有类（称为超类、基类或<strong>父类</strong>）的属性和行为，称新类为已有类的派生类（也称为<strong>子类</strong>）</p>
+<p>在继承过程中派生类继承了基类的特性，包括方法和实例变量</p>
+<p>派生类也可修改继承的方法或增加新的方法，使之 更适合特殊的需要</p>
+<p>有助于解决软件的可重用性问题，使程序结构清晰， 降低了编码和维护的工作量</p>
+<p><strong>单继承</strong></p>
+<p>任何一个派生类都只有单一的直接父类</p>
+<p>类层次结构为树状结构</p>
+<p><strong>多继承</strong></p>
+<p>一个类可以有一个以上的直接父类</p>
+<p>类层次结构为网状结构，设计及实现比较复杂</p>
+<p><strong>Java语言仅支持单继承</strong></p>
+<p>对象的实体构成示意图（假设父类可以实例化，也就是父类不是抽象类）</p>
+<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518113159695.png" alt="image-20210518113159695" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518113159695.png" class="lozad post-image">
+
+<h4 id="4-多态"><a href="#4-多态" class="headerlink" title="4.多态"></a>4.多态</h4><p><strong>一个程序中同名的不同方法共存</strong></p>
+<p>主要通过子类对父类方法地覆盖来实现</p>
+<p>​    接口方法覆盖、方法重载也是实现多态的具体形式。</p>
+<p>不同类的对象可以响应同名的消息（方法），具体的实现方法却不同</p>
+<p>使语言具有灵活、抽象、行为共享、代码共享的优势，很好地解决了应用程序方法同名问题</p>
+<h2 id="二、类与对象"><a href="#二、类与对象" class="headerlink" title="二、类与对象"></a>二、类与对象</h2><p>在程序中，对象是通过一种抽象数据类型来描述的， 这种抽象数据类型称为类（Class）</p>
+<p>一个类是对一类对象的描述。类是构造对象的模板</p>
+<p>对象是类的具体实例</p>
+<h3 id="1-类的声明"><a href="#1-类的声明" class="headerlink" title="1.类的声明"></a>1.类的声明</h3><p><strong>声明形式</strong>    [public] [abstract] [final] class类名称 [extends 父类名称] [implements 接口名称列表]</p>
+<p>​                    {</p>
+<p>​                            变量成员声明及初始化；</p>
+<p>​                            方法声明及方法体；</p>
+<p>​                    }</p>
+<p><strong>关键字</strong></p>
+<p>class    表明其后声明的是一个类。</p>
+<p>extends     如果所声明的类是从某一父类派生而来，那么，父类的名字应写在extends之后</p>
+<p>implements    如果所声明的类要实现某些接口，那么，接口的名字应写在implements之后</p>
+<p><strong>修饰符</strong></p>
+<ul>
+<li>可以有多个，用来限定类的方式<ul>
+<li>public 表明此类为公有类</li>
+<li>abstract 指明此类为抽象类（只能用做超类，不能实例化；只有当子类实现了抽象超类中的所有抽象方法，子类才不是抽象类，才能产生实例）</li>
+<li>final 指明此类为<strong>终结类</strong>（终结类不能被继承，终结方法不能被子类覆盖）</li>
+</ul>
+</li>
+<li>类声明体<ul>
+<li>变量成员声明及初始化    可以有多个</li>
+<li>方法声明及方法体    可以有多个</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-对象的声明与引用"><a href="#2-对象的声明与引用" class="headerlink" title="2.对象的声明与引用"></a>2.对象的声明与引用</h3><p>变量和对象</p>
+<p>变量除了存储基本数据类型的数据，还能存储对象的引用，用来存储对象引用的变量称为引用变量</p>
+<p>类的对象也成为类的实例</p>
+<p>对象的声明</p>
+<p>格式</p>
+<p>​    <strong>类名    变量名</strong></p>
+<p>声明一个引用变量时并没有对象生成</p>
+<p>对象的创建</p>
+<ul>
+<li>生成实例的格式：<ul>
+<li><strong>new &lt;类名&gt;()</strong></li>
+</ul>
+</li>
+<li>其作用是：<ul>
+<li>在内存中为此对象分配内存空间</li>
+<li>返回对象的引用（reference，相当于对象的存储地址）</li>
+</ul>
+</li>
+<li>引用变量可以被赋以空值（默认值也是null）aclock = null;</li>
+</ul>
+<h4 id="自动装箱拆箱"><a href="#自动装箱拆箱" class="headerlink" title="自动装箱拆箱"></a>自动装箱拆箱</h4><p>Java 5新增特性，基本数据类型的自动装箱拆箱</p>
+<p><strong>自动装箱</strong></p>
+<ul>
+<li>Java 5之前：Integer i = new Integer(3)；</li>
+<li>Java 5：Integer i = 3;</li>
+</ul>
+<p><strong>自动拆箱</strong></p>
+<ul>
+<li>Java 5 之前：int j = i.intValue(); //i为Integer类型 的对象</li>
+<li>Java 5：int j = i; //i为Integer类型的对象</li>
+<li>Integer是int的包装类，int则是java的一种基本数据类型 </li>
+</ul>
+<p><strong>自动装箱拆箱</strong></p>
+<p>支持自动装箱和自动拆箱的类型</p>
+<p>这些都是基本数据类型的包装类</p>
+<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518115709299.png" alt="image-20210518115709299" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518115709299.png" class="lozad post-image">
+
+<h3 id="3-数据成员"><a href="#3-数据成员" class="headerlink" title="3.数据成员"></a>3.数据成员</h3><p>表示Java类的状态</p>
+<p>声明数据成员必须给出变量名及其所属的类型，同时还可以指定其他特性</p>
+<p>在一个类中成员变量名是唯一的</p>
+<p>数据成员的类型可以是Java中任意的数据类型（简单类型，类，接口，数组）</p>
+<p><strong>声明格式</strong></p>
+<p><strong>[public | protected | private] [static] [final] [transient] [volatile] 变量数据类型 变量名1[=变量初值]，变量名2[=变量初值],…;</strong></p>
+<p>格式说明</p>
+<ul>
+<li>public、protected、private 为访问控制符</li>
+<li>static指明这是一个静态成员变量</li>
+<li>final指明变量的值不能被修改</li>
+<li><strong>transient</strong>指明变量是临时状态(不必持久化(serialize))</li>
+<li><strong>volatile</strong>指明变量是一个共享变量</li>
+</ul>
+<h4 id="实例变量"><a href="#实例变量" class="headerlink" title="实例变量"></a>实例变量</h4><p>没有static修饰的变量称为实例变量</p>
+<p>用来存储所有实例都需要的属性信息，不同实例的属性值可能会不同</p>
+<p>可通过下面的表达式访问实例属性的值    <strong>&lt;实例名&gt;.&lt;实例变量名&gt;</strong></p>
+<p>实例变量属于特定的对象，在创建对象时<strong>存储在堆中</strong>。</p>
+<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518140433125.png" alt="image-20210518140433125" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518140433125.png" class="lozad post-image">
+
+<pre class="highlight"><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>&#123; </span><br><span class="line"><span class="keyword">int</span> radius; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShapeTester</span> </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123; </span><br><span class="line">Circle x; </span><br><span class="line">x = <span class="keyword">new</span> Circle(); </span><br><span class="line">System.out.println(x);</span><br><span class="line">System.out.println(<span class="string">&quot;radius = &quot;</span> + x.radius); </span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br></pre>
+
+<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518140728958.png" alt="image-20210518140728958" style="zoom: 67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518140728958.png" class="lozad post-image">
+
+<h4 id="类变量"><a href="#类变量" class="headerlink" title="类变量"></a>类变量</h4><p>也成为静态变量，声明时需加static修饰符</p>
+<p>不管类的对象有多少，<strong>类变量只存在一份</strong>，在整个类中只有一个值</p>
+<p>类初始化的同时就被赋值</p>
+<p>适用情况：类中所有对象都相同的属性；经常需要共享的数据；系统中用到的一些常量</p>
+<p>引用格式    <strong>&lt;类名 | 实例名&gt;.&lt;类变量名&gt;</strong></p>
+<pre class="highlight"><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>&#123; </span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">double</span> PI = <span class="number">3.14159265</span>; </span><br><span class="line">	<span class="keyword">int</span> radius; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassVariableTester</span> </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123; </span><br><span class="line">        Circle x = <span class="keyword">new</span> Circle(); </span><br><span class="line">        System.out.println(x.PI); </span><br><span class="line">        System.out.println(Circle.PI); </span><br><span class="line">        Circle.PI = <span class="number">3.14</span>; </span><br><span class="line">        System.out.println(x.PI); </span><br><span class="line">        System.out.println(Circle.PI); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre>
+
+<p>当我们生成Circle类的实例时，在每一个实例中并 没有存储PI的值，PI的值存储在类中<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518141531575.png" alt="image-20210518141531575" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518141531575.png" class="lozad post-image"></p>
+<h4 id="final修饰符"><a href="#final修饰符" class="headerlink" title="final修饰符"></a>final修饰符</h4><p>实例变量和类变量都可以被声明为final</p>
+<p>final实例变量必须在每个构造方法结束之前赋初值，以保证使用之前会被初始化</p>
+<p>final类变量必须在声明的同时初始化</p>
+<p>方法参数也可以被声明为final，防止在方法体中给参数重新赋值</p>
+<p>​        不给参数重新赋值是比较好的编码方式。因为可能会引起误会。</p>
+<p>实例变量即使被声明为final，<strong>也是保存在堆中</strong>。</p>
+<h4 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h4><p>▫ 抽象，封装，继承，多态 </p>
+<p>▫ 自动装箱和自动拆箱 </p>
+<p>▫ static修饰类的成员变量(Java中方法的局部变量不能是static修饰的). ➔类变量 </p>
+<p>▫ final修饰类的成员。也是实例变量，在new对象的时候会和其他实例变量一起分配空间。 </p>
+<p>▫ final 修饰方法参数，防止方法内部对其重新赋值而引起误解。 </p>
+<p>▫ final修饰方法局部变量：作为常量。 </p>
+<p>▫ 变量的位置：堆和栈。</p>
+<h3 id="4-方法成员"><a href="#4-方法成员" class="headerlink" title="4.方法成员"></a>4.方法成员</h3><p>定义类的行为。一个对象能够做的事情，我们能够从一个对象中取得的信息</p>
+<p>可以没有，也可以有多个；一旦在类中声明了方法，它就成为了类声明的一部分</p>
+<p>分为实例方法和类方法</p>
+<p><strong>声明格式</strong></p>
+<p><strong>[public | protected | private] [static] [final] [abstract] [native] [synchronized]</strong></p>
+<p>​    返回类型    方法名([参数列表]) [throws exceptionList]</p>
+<p>{</p>
+<p>​    方法体</p>
+<p>}</p>
+<p>格式说明</p>
+<p>方法修饰</p>
+<ul>
+<li>public、protected、private 为存取控制符</li>
+<li>static指明方法是一个类方法</li>
+<li> final指明方法是一个终结方法</li>
+<li> abstract指明方法是一个抽象方法</li>
+<li> <strong>native</strong>用来集成java代码和其它语言的代码</li>
+<li><strong>synchronized</strong>用来控制多个并发线程对共享数 据的访问</li>
+</ul>
+<p>返回类型</p>
+<ul>
+<li>方法返回值的类型，可以是任意的Java数据类型</li>
+<li> 当不需要返回值时，返回类型为void</li>
+</ul>
+<p>参数类型</p>
+<ul>
+<li>简单数据类型，</li>
+<li>引用类型(数组、类或接口)</li>
+<li>可以有多个参数，也可以没有参数，方法声明时的参数称为<strong>形式参数</strong></li>
+</ul>
+<p>方法体</p>
+<ul>
+<li>方法的实现 </li>
+<li>包括局部变量的声明以及所有合法的Java指令 </li>
+<li> 局部变量的作用域只在该方法内部</li>
+</ul>
+<p>throws exceptionList</p>
+<ul>
+<li>用来处理异常</li>
+</ul>
+<h4 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h4><p>给对象发消息意味者调用对象的某个方法</p>
+<ul>
+<li>从对象中取得信息 </li>
+<li>修改对象的状态或进行某种操作 </li>
+<li>进行计算及取得结果等</li>
+</ul>
+<p>调用格式</p>
+<p>&lt;对象名&gt;.&lt;方法名&gt;（[参数列表])</p>
+<p>称点操作符<strong>“.”<strong>前面的&lt;对象名&gt;为消息的</strong>接收者</strong></p>
+<p>参数传递</p>
+<ul>
+<li>值传递：参数类型为基本数据类型时 </li>
+<li>引用传递：参数类型为引用变量时（比如对象类型或数组时)</li>
+</ul>
+<h4 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h4><p>表示特定对象的行为</p>
+<p>声明时前面不需要加上static修饰符</p>
+<p>使用时需要发送给一个类实例</p>
+<p><strong>关键字this代表此方法的接收者对象</strong></p>
+<p>不同的类中可以声明相同方法名的方法 ；使用时，系统会根据接收者对象的类型找到相应类的方法</p>
+<h4 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h4><p>也成为静态方法，表示类中对象的共有行为</p>
+<p>声明时前面需加static修饰符</p>
+<p>不能被声明为抽象的</p>
+<p>类方法可以在不建立对象的情况下用类名直接调用，也可用类实例调用。</p>
+<p><strong>类方法中不能访问实例变量，否则会发生编译错误</strong></p>
+<h4 id="可变长参数"><a href="#可变长参数" class="headerlink" title="可变长参数"></a>可变长参数</h4><p>从Java 5开始，可以在方法的参数中使用可变长 参数</p>
+<p>可变长参数使用省略号表示，其实质是数组</p>
+<p>例如，”String … s”表示”String[] s”</p>
+<p>对于可变长参数的方法，传递给可变长参数的实际参数可以是多个对象，也可以是一个对象或者是没有对象</p>
+<pre class="highlight"><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">double</span> <span class="title">maxArea</span><span class="params">(Circle c, Rectangle... varRec)</span> </span>&#123;</span><br><span class="line">Rectangle[] rec = varRec;</span><br><span class="line"><span class="keyword">for</span> (Rectangle r : rec) &#123;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">Circle c = <span class="keyword">new</span> Circle();</span><br><span class="line">Rectangle r1 = <span class="keyword">new</span> Rectangle();</span><br><span class="line">Rectangle r2 = <span class="keyword">new</span> Rectangle();</span><br><span class="line">System.out.println(<span class="string">&quot;max area of c, r1 and r2 is &quot;</span> + maxArea(c, r1, </span><br><span class="line">r2));</span><br><span class="line">System.out.println(<span class="string">&quot;max area of c and r1 is &quot;</span> + maxArea(c, r1));</span><br><span class="line">System.out.println(<span class="string">&quot;max area of c and r2 is &quot;</span> + maxArea(c, r2));</span><br><span class="line">System.out.println(<span class="string">&quot;max area of only c is &quot;</span> + maxArea(c));</span><br><span class="line">&#125;</span><br></pre>
+
+<h3 id="5-类的组织"><a href="#5-类的组织" class="headerlink" title="5.类的组织"></a>5.类的组织</h3><h4 id="包的概念"><a href="#包的概念" class="headerlink" title="包的概念"></a>包的概念</h4><p>是一组类的集合，一个包可以包含若干个类文件，还可以包含若干个包</p>
+<p>包的作用：</p>
+<ul>
+<li>将相关的源代码文件组织在一起</li>
+<li>类名的空间管理，利用包来划分名字空间，便可以避免类名冲突</li>
+<li>提供包一级的封装及存取权限</li>
+</ul>
+<p>包的命名</p>
+<ul>
+<li>每个包的名称必须是“独一无二”的</li>
+<li>Java中包名使用<strong>小写字母</strong>表示</li>
+<li>命名方式建议<ul>
+<li>将机构的Internet域名反序，作为包名的前导</li>
+<li>若包名中有任何不可用于标识符的字符，用下划线替代</li>
+<li> 若包名中的任何部分与关键字冲突，后缀下划线</li>
+<li>若包名中的任何部分以数字或其他不能用作标识符 起始的字符开头，前缀下划线</li>
+</ul>
+</li>
+</ul>
+<p>编译单元与类空间</p>
+<ul>
+<li>一个Java源代码文件称为一个编译单元，由三部分组成<ul>
+<li>所属包的声明（省略，则属于默认包）</li>
+<li>Import（引入）包的声明，用于导入外部的类</li>
+<li>类和接口的说明</li>
+</ul>
+</li>
+<li>一个编译单元中只能有一个public类，该类名与文件名相同，编译单元中的其他类往往是public类的辅助类，经过编译，每个类产生一个class文件</li>
+<li>利用包来划分空间，便可以避免类名冲突</li>
+</ul>
+<p>包的声明</p>
+<ul>
+<li>命名的包     例如：<code>package Mypackage;</code></li>
+<li>默认包      不含有包声明的编译单元是默认包的一部分</li>
+</ul>
+<p>包与目录</p>
+<ul>
+<li>Java使用<strong>文件系统来存储包和类</strong></li>
+<li><strong>包名就是文件夹名</strong>，即目录名</li>
+<li>目录名并不一定是包名</li>
+<li>用javac编译源程序时，如遇到当前目录(包)中没有声明的类，就会以环境变量classpath为相对查 找路径，按照包名的结构来查找。因此，要指定 搜寻包的路径，需设置环境变量classpath</li>
+</ul>
+<p>引入包</p>
+<ul>
+<li>为了使用其它包中所提供的类，需要使用import语句引入所需要的类</li>
+<li>Java编译器为所有程序自动引入包java.lang</li>
+<li>import语句的格式    <code>import package1[.package2…]. (classname |*);</code><ul>
+<li>其中package1[package2…]表明包的层次，它对应于文件目录</li>
+<li>classname则指明所要引入的类名</li>
+<li>如果引入一个包中的所有类，则可以使用星号（*）来代替类名</li>
+</ul>
+</li>
+</ul>
+<p>静态引入</p>
+<ul>
+<li>Java5新特性<ul>
+<li>在Java 5之前，通过类名使用类的静态成员。例如， Math.PI，Math.sin(double)</li>
+<li>如果在程序中需要多次使用静态成员，则每次使用都 需要加上类名</li>
+</ul>
+</li>
+<li>静态引入分为两种：单一引入，全体引入<ul>
+<li>单一引入是指引入某一个指定的静态成员，例如： import static java.lang.Math.PI;</li>
+<li>全体引入是指引入类中所有的静态成员，例如： import static java.lang.Math.*;</li>
+</ul>
+</li>
+</ul>
+<p>程序编译方法</p>
+<p> <code>javac -d . Person.java ``    javac -d . Student.java</code></p>
+<p>这样编译器会自动创建目录并保存class文件</p>
+<p>如果当前位置不在上述编译程序的目录下，可以 利用classpath指定JVM搜索类文件的路径。比如:  <code>java -classpath cn.edu.nwpu.person.Student</code></p>
+<h3 id="6-访问控制"><a href="#6-访问控制" class="headerlink" title="6.访问控制"></a>6.访问控制</h3><h4 id="类的访问控制"><a href="#类的访问控制" class="headerlink" title="类的访问控制"></a>类的访问控制</h4><p>体现封装和细节隐藏的程度</p>
+<p>类的访问控制只有public及无修饰符（缺省类）两种</p>
+<p>访问权限符与访问能力之间的关系如表<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518150716887.png" alt="image-20210518150716887" style="zoom: 67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518150716887.png" class="lozad post-image"></p>
+<h4 id="类成员的访问控制"><a href="#类成员的访问控制" class="headerlink" title="类成员的访问控制"></a>类成员的访问控制</h4><p>公有（public）可以被其他任何对象访问（前提是对类成员所在类有访问权限）</p>
+<p>保护（protected）可被<strong>同包任何类</strong>，同一类及其子类的实例对象访问</p>
+<p>私有（private）只能被这个类本身访问，在类外不可见</p>
+<p>默认（default）仅允许同一个包内访问：又被称为“包访问权限”</p>
+<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518151511834.png" alt="image-20210518151511834" style="zoom: 67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518151511834.png" class="lozad post-image">
+
+<p><strong>面向对象程序设计为了体现细节隐藏，应该尽可能把数据成员设计为private。</strong></p>
+<p>如果要允许其它类访问radius的值，就需要在Circle类中声明 相应的公有方法。通常有两类典型的方法用于访问属性值， get方法及set方法</p>
+<h4 id="get方法"><a href="#get方法" class="headerlink" title="get方法"></a>get方法</h4><p>功能是取得属性变量的值</p>
+<p>get方法名以“get”开头，后面是实例变量的名字</p>
+<p>一般具有以下格式： <strong>public <fieldType> get<FieldName>(){return <fieldName>;}</strong></p>
+<h4 id="set方法"><a href="#set方法" class="headerlink" title="set方法"></a>set方法</h4><p>功能是修改属性变量的值</p>
+<p>set方法名以“set”开头，后面是实例变量的名字</p>
+<p>一般具有以下格式：public  void set<FieldName>(<fieldType> <paramName>)</p>
+<p>​                                {<fieldName>=<paramName>;}</p>
+<p>关键字this的使用</p>
+<p>如果形式参数名与实例变量名相同，则需要在实例变量名之前加this关键字，否则系统会将实例变量当成形式参数。</p>
+<p>在上面的set方法中，如果形式参数为radius，则需要在成员变量radius之前加上关键字this。</p>
+<p><code>public void setRadius(int radius)&#123; this.radius = radius; &#125;</code></p>
+<h4 id="Review-1"><a href="#Review-1" class="headerlink" title="Review"></a>Review</h4><ul>
+<li><p>实例方法，类方法 </p>
+<ul>
+<li> 类方法不能访问实例变量     </li>
+</ul>
+</li>
+<li><p>• package </p>
+<ul>
+<li> 类的组织和管理 </li>
+<li> classpath 的使用 </li>
+<li> import 以及import static </li>
+</ul>
+</li>
+<li><p> 访问控制 </p>
+</li>
+<li><p> 类的访问控制: public 默认 </p>
+</li>
+<li><p> 类成员的访问控制: public 默认, protected, private </p>
+</li>
+<li><p> set和get方法:</p>
+</li>
+</ul>
+<h4 id="Package补充"><a href="#Package补充" class="headerlink" title="Package补充"></a>Package补充</h4><p>Alpha类的访问控制 为public,则其成员的可见性：</p>
+<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518152909372.png" alt="image-20210518152909372" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518152909372.png" class="lozad post-image">
+
+<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518152916986.png" alt="image-20210518152916986" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518152916986.png" class="lozad post-image">
+
+<h2 id="三、对象的初始化和回收"><a href="#三、对象的初始化和回收" class="headerlink" title="三、对象的初始化和回收"></a>三、对象的初始化和回收</h2><p>对象的初始化</p>
+<p>系统在生成对象时，会为对象分配内存空间，并自动调用构造方法对实例变量进行初始化</p>
+<p>对象回收</p>
+<p>对象不再使用时，系统会调用垃圾回收程序将其占用的内存回收</p>
+<h3 id="1-构造方法"><a href="#1-构造方法" class="headerlink" title="1.构造方法"></a>1.构造方法</h3><p>一种<strong>和类同名</strong>的特殊方法；</p>
+<p>用来初始化对象；</p>
+<p>Java中每个类都有构造方法，用来初始化该类的一个新的对象；</p>
+<p>没有定义构造方法的类，系统自动提供默认的构造方法。</p>
+<p>构造方法的特点：</p>
+<ul>
+<li>方法名与类名相同</li>
+<li><strong>没有返回类型</strong>，修饰符void也不能有</li>
+<li>通常被声明为公有的（public）</li>
+<li>可以有任意多个参数</li>
+<li>主要作用是完成对象的初始化工作</li>
+<li>不能在程序中显式的调用</li>
+<li>在生成一个对象时，系统会自动调用该类的构造方法为新生成的对象初始化</li>
+</ul>
+<h4 id="默认构造方式"><a href="#默认构造方式" class="headerlink" title="默认构造方式"></a>默认构造方式</h4><p>系统提供的默认构造方式</p>
+<ul>
+<li>如果在类的声明中没有声明构造方法，则Java编译 器会提供一个默认的构造方法</li>
+<li>默认的构造方法没有参数，其方法体为空</li>
+<li>使用默认的构造方法初始化对象时，如果在类声明中没有给实例变量赋初值，则对象的属性值为<strong>零或空</strong></li>
+</ul>
+<p><strong>自定义构造方法</strong></p>
+<p>自定义构造方法与方法重载</p>
+<ul>
+<li>可在生成对象时给构造方法传送初始值，使用希望的值给对象初始化</li>
+<li>构造方法可以被重载，构造方法的<strong>重载</strong>和方法的重载一致</li>
+<li><strong>一个类中有两个及以上同名的方法，但参数表不同，这种情况就被称为方法的重载。</strong>在方法调用时，Java可以通过参数列表的不同来辨别应调用哪一个方法。</li>
+</ul>
+<p>自定义无参的构造方法</p>
+<ul>
+<li>无参的构造方法对其子类的声明很重要。如果在一个类中不存在无参的构造方法，则要求其子类声明时必须声明构造方法，否则在子类对象的初始化时会出错。</li>
+<li>在声明构造方法时，好的声明习惯是<ul>
+<li>不声明构造方法</li>
+<li>如果声明，<strong>至少声明一个无参构造方法</strong></li>
+</ul>
+</li>
+</ul>
+<p>用户在进行类声明时，如果没有声明任何构造方法，系统 会赋给此类一个默认（无参）的构造方法。但是，只要用 户声明了构造方法，即使没有声明无参的构造方法，系统也不再赋默认的构造方法。</p>
+<h4 id="this关键字的使用"><a href="#this关键字的使用" class="headerlink" title="this关键字的使用"></a>this关键字的使用</h4><p>可以使用this关键字在一个构造方法中调用另外的构造方法；</p>
+<p>代码更简洁，维护起来更容易；</p>
+<p><strong>通常用参数个数比较少的构造方法调用参数个数最多的构造方法</strong>。</p>
+<img src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518190738715.png" alt="image-20210518190738715" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518190738715.png" class="lozad post-image">
+
+<h3 id="2-内存回收技术"><a href="#2-内存回收技术" class="headerlink" title="2.内存回收技术"></a>2.内存回收技术</h3><h4 id="内存回收技术"><a href="#内存回收技术" class="headerlink" title="内存回收技术"></a><strong>内存回收技术</strong></h4><p>当一个对象在程序中不再被使用时，就成为一个无用对象</p>
+<ul>
+<li><strong>当前的代码段不属于对象的作用域</strong></li>
+<li><strong>把对象的引用赋值为空</strong></li>
+</ul>
+<p>Java运行时系统通过<strong>垃圾收集器</strong>周期性地释放无用对象所使用的内存</p>
+<p>Java运行时系统会在对对象进行自动垃圾回收前，自动调用对象的<strong>finalize（）方法</strong></p>
+<h4 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h4><p>自动扫描对象的动态内存区，对不再使用的对象做上标记以进行垃圾回收</p>
+<p>作为一个线程运行</p>
+<ul>
+<li>通常在系统空闲时异步地执行</li>
+<li>当系统的内存用尽或程序中调用**System.gc()**要求进行垃圾收集时，与系统同步运行。</li>
+</ul>
+<h4 id="finalize-方法"><a href="#finalize-方法" class="headerlink" title="finalize()方法"></a>finalize()方法</h4><p>在类java.lang.Object中声明，因此 Java中的每一个 类都有该方法</p>
+<p>用于释放系统资源，如关闭打开的文件或<strong>socket</strong>等</p>
+<p>声明格式    <strong>protected void finalize() throws throwable</strong></p>
+<p>如果一个类需要释放除内存以外的资源，则需在类中重写finalize()方法（不可靠）</p>
+<p>与C++析构函数不同，finalize()方法在垃圾回收时才会调用。注意：</p>
+<ul>
+<li>对象不一定会被回收</li>
+<li>垃圾回收不是析构函数</li>
+<li>垃圾回收至于内存有关</li>
+<li>垃圾回收和finalize()都是靠不住的，因为系统执行垃圾回收的时机不确定</li>
+</ul>
+<h4 id="同C和C-的区别"><a href="#同C和C-的区别" class="headerlink" title="同C和C++的区别"></a>同C和C++的区别</h4><p>C语言中通过free来释放内存，C++中则通过delete来释放内存</p>
+<p>在C和C++中，如果程序员忘记释放内存，则容易造成内存泄漏甚至导致内存耗尽</p>
+<p>在Java中不会发生内存泄漏情况，但对于其它资源， 则有产生泄漏的可能性</p>
+<h2 id="四、枚举类型"><a href="#四、枚举类型" class="headerlink" title="四、枚举类型"></a>四、枚举类型</h2><p>Java 5的新特色，可以取代Java 5之前的版本中使用的常量</p>
+<p>需要一个有限集合，而且集合中的数据为特定的值时，可以使用枚举类型</p>
+<p>格式：</p>
+<p>[public] enum 枚举类型名称 [implements 接口名称列表]</p>
+<p>{    </p>
+<p>​    枚举值；</p>
+<p>​    变量成员声明及初始化；</p>
+<p>​    方法声明及方法体；</p>
+<p>}</p>
+<img src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518192536824.png" alt="image-20210518192536824" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518192536824.png" class="lozad post-image">
+
+<p>枚举类型特点</p>
+<p>枚举类型是类，而不是简单的整数类型，枚举值是类的对象。</p>
+<p>枚举类型是java.lang.Enum类的子类。</p>
+<p>枚举类型<strong>没有public的构造函数</strong></p>
+<p>枚举值是<strong>public、static、final</strong>的。</p>
+<h3 id="1-枚举类型的默认方法"><a href="#1-枚举类型的默认方法" class="headerlink" title="1.枚举类型的默认方法"></a>1.枚举类型的默认方法</h3><ul>
+<li>取得枚举值的数组 <ul>
+<li> public static T[] values() </li>
+</ul>
+</li>
+<li> 取得枚举值对应的字符串 </li>
+<li> public String toString() </li>
+<li> 取得对象在枚举类型中的索引 </li>
+<li> public final int ordinal() </li>
+<li> 字符串转换为枚举值。 </li>
+<li> public static T valueOf(String)</li>
+</ul>
+<h3 id="2-枚举类型的自定义属性和方法"><a href="#2-枚举类型的自定义属性和方法" class="headerlink" title="2.枚举类型的自定义属性和方法"></a>2.枚举类型的自定义属性和方法</h3><p>枚举类型相当于自定义一个类。因此可以给该类自定义数据和方法。</p>
+<p>枚举类型的<strong>构造函数默认是private</strong>，而且必须是private。</p>
+<p>即枚举类型会由JVM在加载的时候，实例化枚举对象，你在枚举类中定义了多少个就会实例化多少个，JVM为了保证每一个枚举类元素的唯一实例，是不会允许外部进行new的，所以会把构造函数设计成private，防止用户生成实例，破坏唯 一性。</p>
+<p>因为枚举对象的实例化是由jvm完成的，所以可 以确保该对象只被创建一次。因此，利用枚举可以完美的实现<strong>“单例模式”</strong>。这是目前最有效的 单例模式实现方法。</p>
+<h3 id="补充材料：变量初始化"><a href="#补充材料：变量初始化" class="headerlink" title="补充材料：变量初始化"></a>补充材料：变量初始化</h3><p>变量声明时可以设定初值，比如: <code>class Car &#123; int door=4; &#125;</code></p>
+<p>可以在构造函数中设置初值，比如：<code>class Car &#123;Car()&#123;door=5;&#125;&#125;</code></p>
+<p>实例变量的<strong>初始化块</strong>。可以把构造函数中共同的处理放到初始化块中。编译器会自动地把初始化块的代码<strong>插入到构造函数最前面</strong>。</p>
+<p>初始化块可以写多个。<img src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518193854367.png" alt="image-20210518193854367" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518193854367.png" class="lozad post-image"></p>
+<p>对于类变量，可以使用静态初始化块。<strong>静态初始化块会在类加载时执行</strong>。</p>
+<p>静态初始化块可以有多个，会按照代码顺序执行。</p>
+<img src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518194028091.png" alt="image-20210518194028091" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518194028091.png" class="lozad post-image">
+
+<p>执行顺序：变量初始化最先执行。</p>
+<ul>
+<li>在加载类时<strong>执行一次静态初始化块</strong>（之后不再调用）</li>
+<li>在每次初始化实例对象时：先执行非静态初始化块，在执行构造方法。</li>
+</ul>
+<h3 id="Review-2"><a href="#Review-2" class="headerlink" title="Review"></a>Review</h3><p>构造方法 </p>
+<ul>
+<li> 没有返回值 </li>
+<li> 默认构造方法 </li>
+<li>重载： 方法签名(method signature ) </li>
+</ul>
+<p>内存回收 </p>
+<ul>
+<li> 变量的自动释放 </li>
+<li>显式地给引用变量赋值null </li>
+<li> finalize()方法由垃圾回收器执行，执行时机不确定，因此不可靠。 </li>
+</ul>
+<p> 枚举</p>
+<ul>
+<li> 特殊的类，构造方法总是private的 </li>
+<li> 枚举值是枚举类型的实例，加载类时由jvm创建(单例模式) </li>
+</ul>
+<p> 变量初始化 </p>
+<ul>
+<li> 实例变量:初值→初始化块→构造方法 </li>
+<li> 类变量: 初值→静态初始化块</li>
+</ul>
+<h2 id="五、应用举例"><a href="#五、应用举例" class="headerlink" title="五、应用举例"></a>五、应用举例</h2><h2 id="七、注解"><a href="#七、注解" class="headerlink" title="七、注解"></a>七、注解</h2><p>注解也叫<strong>元数据</strong>，就是用来描述数据的数据。它其实就是程序代码里的特殊标记，这些标记可以在编 译、类加载、运行时被读取并执行相应的处理。注 解主要用于告知编译器要做什么事情，在程序中可 对任何程序元素进行注解。</p>
+<p>根据注解的作用可以将注解分为<strong>基本注解、元注解 (或称元数据注解)与自定义注解</strong>三种</p>
+<p>注解可以理解为对代码贴的标签，这个标签对 代码进行说明和解释。不过这个标签和代码的 注释(comment)不同：</p>
+<ul>
+<li>注释只存在于代码中，编译器会简单地跳过注释。</li>
+<li>而编译器会处理注解。而且根据注解自身的特点，可以保留到运行时的内存中。</li>
+</ul>
+<p>基本注解：Java提供的注解。主要有三种：</p>
+<ul>
+<li>java.lang.Override:    重载父类的方法</li>
+<li>java.lang.Deprectated:    方法已过时</li>
+<li>java.lang.SuppressWarnings:    抑制编译器警告</li>
+</ul>
+<h3 id="1-自定义注解"><a href="#1-自定义注解" class="headerlink" title="1.自定义注解"></a>1.自定义注解</h3><p>格式：</p>
+<p><strong>[public | ] [abstract | final] @interface 注解名 {  元素定义； }</strong></p>
+<p><strong>两类特殊注解</strong></p>
+<p>标记注解：没有元素定义</p>
+<p>单值注解：只定义一个元素</p>
+<p>注解的使用：在注解名前加上”@“符号，并在其后的括号中对个元素赋值</p>
+<pre class="highlight"><span class="line"><span class="meta">@interface</span> MyMarkerAnnotation &#123; &#125;</span><br><span class="line"><span class="meta">@interface</span> MySingleValueAnnotation &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span> <span class="params">( )</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@interface</span> MyAnnotation &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">i</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">float</span> <span class="title">f</span><span class="params">()</span> <span class="keyword">default</span> 2.0f</span>;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">d</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationTester</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; &#125;</span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">//表示覆盖父类的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="meta">@MyMarkerAnnotation</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@MySingleValueAnnotation(&quot;s&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@MyAnnotation(value=&quot;s&quot;, i=1, d=3.0)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@MyAnnotation(value=&quot;s&quot;, i=1, f=2.1f, d=3.0)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre>
+
+<h3 id="2-元注解简洁"><a href="#2-元注解简洁" class="headerlink" title="2.元注解简洁"></a>2.元注解简洁</h3><p>元注解：注解的注解</p>
+<p>在<code>java.lang.annotation</code>包下，提供了4个元注解：</p>
+<ul>
+<li><strong>Retention</strong>：表明注解的保留程度，需要提供一个 <code>java.lang.annotation.RetentionPolicy</code>枚举类型的枚举值<ul>
+<li><code>RetentionPolicy.SOURCE</code>  <code>RetentionPolicy.CLASS</code>  <code>RetentionPolicy.RUNTIME</code></li>
+</ul>
+</li>
+<li><strong>Target</strong>：指定注解所适用的程序元素的类型，需要提供一个<code>java.lang.annotation.Target</code>枚举类型的枚举值:<ul>
+<li>ANNOTATION_TYPE , CONSTRUCTOR , FIELD ,  LOCAL_VARIABLE , METHOD , PACKAGE ,  PARAMETER , TYPE , and TYPE_PARAMETER</li>
+<li>从Java 8开始，注解已经能应用于任何目标。这其中包括 new操作符、类型转换、instanceof检查、泛型类型参数， 以及implements和throws子句。</li>
+</ul>
+</li>
+<li><strong>Documented</strong>：表明可以将注解通过Javadoc或者类似工具进行文档化</li>
+<li><strong>Inherited</strong>：表明注解被自动继承</li>
+</ul>
+<h3 id="3-注解的处理"><a href="#3-注解的处理" class="headerlink" title="3.注解的处理"></a>3.注解的处理</h3><p>从Java 6开始，可以对注解进行处理， <code>javax.annotation.processing</code>包提供了对注解的处理</p>
+<h2 id="八、本章小结"><a href="#八、本章小结" class="headerlink" title="八、本章小结"></a>八、本章小结</h2><p>本章内容 </p>
+<ul>
+<li>面向对象程序设计的基本概念和思想 </li>
+<li> Java语言类与对象的基本概念和语法，包括类的声明、类成员的访问，以及对象的构造、初始化和回收 </li>
+</ul>
+<p> 本章要求 </p>
+<ul>
+<li> 理解类和对象的概念 </li>
+<li> 熟练使用类及其成员的访问控制方法 </li>
+<li> 熟练掌握各种构造方法 </li>
+<li> 了解java的垃圾回收机</li>
+</ul>
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            xuehongfei
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="http://example.com/2021/08/05/02-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">
+            http://example.com/2021/08/05/02-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+    <div class="nav-item-prev">
+      <a 
+        href="/2021/08/05/03-%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95/" 
+        class="nav-link">
+        <i class="iconfont icon-left nav-prev-icon"></i>
+        <div>
+          <div class="nav-label">Prev</div>
+          
+            <div class="nav-title">03 类中的方法 </div>
+          
+        </div>
+      </a>
+    </div>
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/2021/08/05/01-Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0/" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">Next</div>
+          
+            <div class="nav-title">01 Java语言概述 </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">第二章 类与对象的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-text">一、面向对象的程序设计方法概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-text">1.面向对象的程序设计方法概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1"><span class="toc-text">对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-text">类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">结构化程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">面向对象程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8A%BD%E8%B1%A1"><span class="toc-text">1.抽象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%B0%81%E8%A3%85"><span class="toc-text">2.封装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%BB%A7%E6%89%BF"><span class="toc-text">3.继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%A4%9A%E6%80%81"><span class="toc-text">4.多态</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1"><span class="toc-text">二、类与对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="toc-text">1.类的声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%BC%95%E7%94%A8"><span class="toc-text">2.对象的声明与引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E7%AE%B1%E6%8B%86%E7%AE%B1"><span class="toc-text">自动装箱拆箱</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98"><span class="toc-text">3.数据成员</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F"><span class="toc-text">实例变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%8F%98%E9%87%8F"><span class="toc-text">类变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#final%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-text">final修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Review"><span class="toc-text">Review</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%96%B9%E6%B3%95%E6%88%90%E5%91%98"><span class="toc-text">4.方法成员</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8"><span class="toc-text">方法调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="toc-text">实例方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="toc-text">类方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0"><span class="toc-text">可变长参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%B1%BB%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">5.类的组织</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%85%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">包的概念</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-text">6.访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-text">类的访问控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-text">类成员的访问控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get%E6%96%B9%E6%B3%95"><span class="toc-text">get方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set%E6%96%B9%E6%B3%95"><span class="toc-text">set方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Review-1"><span class="toc-text">Review</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Package%E8%A1%A5%E5%85%85"><span class="toc-text">Package补充</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E5%9B%9E%E6%94%B6"><span class="toc-text">三、对象的初始化和回收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-text">1.构造方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E6%96%B9%E5%BC%8F"><span class="toc-text">默认构造方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#this%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">this关键字的使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%E6%8A%80%E6%9C%AF"><span class="toc-text">2.内存回收技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%E6%8A%80%E6%9C%AF"><span class="toc-text">内存回收技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-text">垃圾收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#finalize-%E6%96%B9%E6%B3%95"><span class="toc-text">finalize()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8CC%E5%92%8CC-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">同C和C++的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B"><span class="toc-text">四、枚举类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95"><span class="toc-text">1.枚举类型的默认方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="toc-text">2.枚举类型的自定义属性和方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E6%9D%90%E6%96%99%EF%BC%9A%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">补充材料：变量初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-2"><span class="toc-text">Review</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="toc-text">五、应用举例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%B3%A8%E8%A7%A3"><span class="toc-text">七、注解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3"><span class="toc-text">1.自定义注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%83%E6%B3%A8%E8%A7%A3%E7%AE%80%E6%B4%81"><span class="toc-text">2.元注解简洁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-text">3.注解的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93"><span class="toc-text">八、本章小结</span></a></li></ol></li></ol>
+</div></main>
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="img/catton.jpg" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">xuehongfei</p>
+<p class="author-description">designed by Mr.Xue</p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>7</span>
+    <span>Posts</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>0</span>
+    <span>Categories</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>0</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">第二章 类与对象的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-text">一、面向对象的程序设计方法概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-text">1.面向对象的程序设计方法概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1"><span class="toc-text">对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-text">类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">结构化程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">面向对象程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8A%BD%E8%B1%A1"><span class="toc-text">1.抽象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%B0%81%E8%A3%85"><span class="toc-text">2.封装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%BB%A7%E6%89%BF"><span class="toc-text">3.继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%A4%9A%E6%80%81"><span class="toc-text">4.多态</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1"><span class="toc-text">二、类与对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="toc-text">1.类的声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%BC%95%E7%94%A8"><span class="toc-text">2.对象的声明与引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E7%AE%B1%E6%8B%86%E7%AE%B1"><span class="toc-text">自动装箱拆箱</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98"><span class="toc-text">3.数据成员</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F"><span class="toc-text">实例变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%8F%98%E9%87%8F"><span class="toc-text">类变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#final%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-text">final修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Review"><span class="toc-text">Review</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%96%B9%E6%B3%95%E6%88%90%E5%91%98"><span class="toc-text">4.方法成员</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8"><span class="toc-text">方法调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="toc-text">实例方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="toc-text">类方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0"><span class="toc-text">可变长参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%B1%BB%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">5.类的组织</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%85%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">包的概念</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-text">6.访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-text">类的访问控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-text">类成员的访问控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get%E6%96%B9%E6%B3%95"><span class="toc-text">get方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set%E6%96%B9%E6%B3%95"><span class="toc-text">set方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Review-1"><span class="toc-text">Review</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Package%E8%A1%A5%E5%85%85"><span class="toc-text">Package补充</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E5%9B%9E%E6%94%B6"><span class="toc-text">三、对象的初始化和回收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-text">1.构造方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E6%96%B9%E5%BC%8F"><span class="toc-text">默认构造方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#this%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">this关键字的使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%E6%8A%80%E6%9C%AF"><span class="toc-text">2.内存回收技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%E6%8A%80%E6%9C%AF"><span class="toc-text">内存回收技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-text">垃圾收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#finalize-%E6%96%B9%E6%B3%95"><span class="toc-text">finalize()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8CC%E5%92%8CC-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">同C和C++的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B"><span class="toc-text">四、枚举类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95"><span class="toc-text">1.枚举类型的默认方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="toc-text">2.枚举类型的自定义属性和方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E6%9D%90%E6%96%99%EF%BC%9A%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">补充材料：变量初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-2"><span class="toc-text">Review</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="toc-text">五、应用举例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%B3%A8%E8%A7%A3"><span class="toc-text">七、注解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3"><span class="toc-text">1.自定义注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%83%E6%B3%A8%E8%A7%A3%E7%AE%80%E6%B4%81"><span class="toc-text">2.元注解简洁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-text">3.注解的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93"><span class="toc-text">八、本章小结</span></a></li></ol></li></ol>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>Categories
+  </div>
+  <div class="categories-list">
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>hot tags
+  </div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">第二章 类与对象的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-text">一、面向对象的程序设计方法概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-text">1.面向对象的程序设计方法概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1"><span class="toc-text">对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB"><span class="toc-text">类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">结构化程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">面向对象程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8A%BD%E8%B1%A1"><span class="toc-text">1.抽象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%B0%81%E8%A3%85"><span class="toc-text">2.封装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%BB%A7%E6%89%BF"><span class="toc-text">3.继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%A4%9A%E6%80%81"><span class="toc-text">4.多态</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1"><span class="toc-text">二、类与对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="toc-text">1.类的声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%BC%95%E7%94%A8"><span class="toc-text">2.对象的声明与引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E7%AE%B1%E6%8B%86%E7%AE%B1"><span class="toc-text">自动装箱拆箱</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98"><span class="toc-text">3.数据成员</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F"><span class="toc-text">实例变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%8F%98%E9%87%8F"><span class="toc-text">类变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#final%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-text">final修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Review"><span class="toc-text">Review</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%96%B9%E6%B3%95%E6%88%90%E5%91%98"><span class="toc-text">4.方法成员</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8"><span class="toc-text">方法调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="toc-text">实例方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="toc-text">类方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0"><span class="toc-text">可变长参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%B1%BB%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">5.类的组织</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%85%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">包的概念</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-text">6.访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-text">类的访问控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-text">类成员的访问控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get%E6%96%B9%E6%B3%95"><span class="toc-text">get方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set%E6%96%B9%E6%B3%95"><span class="toc-text">set方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Review-1"><span class="toc-text">Review</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Package%E8%A1%A5%E5%85%85"><span class="toc-text">Package补充</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E5%9B%9E%E6%94%B6"><span class="toc-text">三、对象的初始化和回收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-text">1.构造方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E6%9E%84%E9%80%A0%E6%96%B9%E5%BC%8F"><span class="toc-text">默认构造方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#this%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">this关键字的使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%E6%8A%80%E6%9C%AF"><span class="toc-text">2.内存回收技术</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6%E6%8A%80%E6%9C%AF"><span class="toc-text">内存回收技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-text">垃圾收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#finalize-%E6%96%B9%E6%B3%95"><span class="toc-text">finalize()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8CC%E5%92%8CC-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">同C和C++的区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B"><span class="toc-text">四、枚举类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%B9%E6%B3%95"><span class="toc-text">1.枚举类型的默认方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="toc-text">2.枚举类型的自定义属性和方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E6%9D%90%E6%96%99%EF%BC%9A%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">补充材料：变量初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Review-2"><span class="toc-text">Review</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="toc-text">五、应用举例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%B3%A8%E8%A7%A3"><span class="toc-text">七、注解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3"><span class="toc-text">1.自定义注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%83%E6%B3%A8%E8%A7%A3%E7%AE%80%E6%B4%81"><span class="toc-text">2.元注解简洁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-text">3.注解的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93"><span class="toc-text">八、本章小结</span></a></li></ol></li></ol>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>Recent Posts
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-05</div>
+        <a href="/2021/08/05/05-%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%A4%9A%E6%80%81/"><div class="recent-posts-item-content">05 接口与多态</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-05</div>
+        <a href="/2021/08/05/04-%E7%B1%BB%E7%9A%84%E9%87%8D%E7%94%A8/"><div class="recent-posts-item-content">04 类的重用</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-05</div>
+        <a href="/2021/08/05/03-%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95/"><div class="recent-posts-item-content">03 类中的方法</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-05</div>
+        <a href="/2021/08/05/02-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"><div class="recent-posts-item-content">02 类与对象的基本概念</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2020 -
+          
+          2021
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          Mr.Xue's Blog
+        </a>
+      </div>
+    </div>
+
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://hexo.io/" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;Hexo
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Theme -
+          <a 
+            href="https://github.com/theme-kaze" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;Kaze
+          </a>
+        
+      </div>
+    
+    
+    
+    
+</footer> 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+     
+    
+    
+  </body>
+</html>

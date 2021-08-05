@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="Hexo">
+  <link 
+    rel="icon" 
+    href="/img/catton.jpg">
+  <title>01 Java语言概述</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="01 Java语言概述">
+    
+    
+      <meta 
+        property="og:url" 
+        content="http://example.com/2021/08/05/01-Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0/index.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="img/catton.jpg">
+    
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2021-08-05">
+      <meta 
+        property="og:article:modified_time" 
+        content="2021-08-05">
+      <meta 
+        property="og:article:author" 
+        content="xuehongfei">
+      
+        
+      
+    
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+        <img 
+          class="navbar-logo-img"
+          width="32"
+          height="32"
+          src="/img/catton.jpg" 
+          alt="blog logo">
+      
+      <span class="navbar-logo-dsc">Mr.Xue's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          Home
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          Archive
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          Tags
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          Categories
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          About
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          Friends
+        
+      </a>
+    
+    <a 
+      class="navbar-menu-item darknavbar" 
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </a>
+    <a 
+      class="navbar-menu-item searchnavbar" 
+      id="search">
+      <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i>
+    </a>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      01 Java语言概述
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-08-05T01:29:33.712Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2021-08-05</span>
+    </time>
+    
+    
+      <span class="dot"></span>
+      <span>7.8k words</span>
+    
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <h1 id="第一章-0-Java语言概述"><a href="#第一章-0-Java语言概述" class="headerlink" title="第一章-0 Java语言概述"></a>第一章-0 Java语言概述</h1><h2 id="一、Java语言的诞生与发展"><a href="#一、Java语言的诞生与发展" class="headerlink" title="一、Java语言的诞生与发展"></a>一、Java语言的诞生与发展</h2><p>Java语言诞生于20世纪90年代初期</p>
+<p>Java语言是目前最流行的编程语言</p>
+<h2 id="二、Java语言的特点"><a href="#二、Java语言的特点" class="headerlink" title="二、Java语言的特点"></a>二、Java语言的特点</h2><ol>
+<li><p>简单易学。</p>
+</li>
+<li><p>![image-20210516124908522](D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516124908522.png)</p>
+</li>
+<li><p>面向对象。是一种以<strong>对象</strong>为中心，以<strong>消息</strong>为驱动的面向对象的编程语言。支持：<strong>封装、继承和多态</strong>。</p>
+</li>
+<li><p>平台无关性。分为源代码级（需要重新编译，如C/C++）和目标代码级（Java）。</p>
+</li>
+<li><p>分布式。数据分布是指数据可以分散在网络的不同主机上；操作分布指把一个计算分散在不同的主机上处理。</p>
+</li>
+<li><p>可靠性和安全性。不支持指针，这样避免了对内存的非法访问；自动单元回收功能防 内存丢失等动态内存分配导致的问题；Java解释器运行时实施检查，可发现数组和字符串访问的越界；提供了异常处理机制。</p>
+</li>
+<li><p>支持多线程。<strong>线程是比进程更小的可并发执行的单位。</strong></p>
+</li>
+<li><p>支持网络编程。Java的小程序（Applet）是动态、安全、跨平台的网络应用程序。</p>
+</li>
+<li><p>编译和解释并存。由编译器将Java源程序编译成<strong>字节码</strong>文件，然后再由Java运行系统解释执行字节码文件（解释器将字节码再翻译成二进制码运行）。</p>
+</li>
+</ol>
+<h2 id="三、Java技术简介"><a href="#三、Java技术简介" class="headerlink" title="三、Java技术简介"></a>三、Java技术简介</h2><p>Java SE（Standard Edition）：是Java平台的标准版。主要用于桌面应用软件的编程。</p>
+<p>Java ME（Micro Edition）：是Java平台的精简版。主要应用于嵌入式系统开发，如手机和PDA的编程。</p>
+<p>Java EE（Enterprise Edition）：是Java平台的企业版。主要应用于分布式的网络程序的开发，如电子商务网站和ERP系统。</p>
+<p>当前开发者使用最多的是JDK 8</p>
+<h2 id="四、Java虚拟机"><a href="#四、Java虚拟机" class="headerlink" title="四、Java虚拟机"></a>四、Java虚拟机</h2><p>![image-20210516130121239](D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516130121239.png)</p>
+<p><strong>字节码</strong>是Java虚拟机（JVM）的指令组。字节码最大的好处是可跨平台运行，即Java的字节码可以编写一次，到处运行。</p>
+<p>任何一种可以运行Java字节码的软件均可看成是Java的“虚拟机”，可以把Java的字节码看成是JVM上所运行的机器码。</p>
+<ul>
+<li>​    解释器是JVM的一部分。</li>
+</ul>
+<h3 id="JIT与JVM的三种执行模式：解释模式、编译模式、混合模式"><a href="#JIT与JVM的三种执行模式：解释模式、编译模式、混合模式" class="headerlink" title="JIT与JVM的三种执行模式：解释模式、编译模式、混合模式"></a>JIT与JVM的三种执行模式：解释模式、编译模式、混合模式</h3><p><strong>Java JIT</strong>（just in time）Compiler<strong>即时编译器</strong>是目的在于提高java程序的性能，改变人们“java比C/C++慢很多” 这一印象。</p>
+<p>说起来是编译器，但此编译器与通常说的javac那个编译器不同，它其实是<strong>将字节码编译为硬件可执行的机器码的</strong>。</p>
+<p>如图所示为<strong>混合模式</strong>：</p>
+<p>​    ◼ 1、源代码经javac编译成字节码，class文件 </p>
+<p>​    ◼ 2、程序字节码经过JIT环境变量进行判断，是否属于“热点代码” （多次调用的方法，或循环等） </p>
+<p>​    ◼ 3、如是，走JIT编译为具体硬件处理器（如sparc、intel）机器码 </p>
+<p>​    ◼ 4、如否，则直接由解释器解释执行 </p>
+<p>​    ◼ 5、操作系统及类库调用 </p>
+<p>​    ◼ 6、最终反应到硬件上</p>
+<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516131003162.png" alt="image-20210516131003162" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516131003162.png" class="lozad post-image">
+
+<p>JVM还有两种执行方式：解释执行和编译执行。</p>
+<ul>
+<li>​    对于<strong>解释执行</strong>，不经过JIT直接由解释器解释执行所有字节码，执行效率不高。</li>
+<li>​    而<strong>编译执行</strong>不加筛选的将全部代码进行编译机器码不论其执行频率是否有编译价值，在程序响应时间的限制下，编译器没法采用编译耗时较高的优化技术，所以，在纯编译执行模式下的Java程序执行效率跟C/C++也是具有较大差距的。</li>
+</ul>
+<p>因此，新版本的JVM默认都是采用混合执行模式。</p>
+<p>JIT并不一定总能提高程序的执行效率甚至适得其反，这很大一部分取决于开发人员所写程序的质量。</p>
+<h2 id="五、Java程序的种类和结构"><a href="#五、Java程序的种类和结构" class="headerlink" title="五、Java程序的种类和结构"></a>五、Java程序的种类和结构</h2><h3 id="Java应用程序（Application）"><a href="#Java应用程序（Application）" class="headerlink" title="Java应用程序（Application）"></a>Java应用程序（Application）</h3><p>它可以在Java平台上独立运行，通常称之为Java应用程序。Java应用程序是独立完整的程序，在命 令行调用独立的解释器软件即可运行。 </p>
+<p>Java应用程序的主类必须有一个定义为 public static void main(String[] args) 的主方法，这个是 Java应用程序执行的入口点方法，同时也是Java应用程序的标志。 </p>
+<p>Java应用程序可划分为以下两种：命令行程序Command Line；GUI (Graphics User Interface)</p>
+<h3 id="Java小程序（Appplet）（Java-9开始已经废弃）"><a href="#Java小程序（Appplet）（Java-9开始已经废弃）" class="headerlink" title="Java小程序（Appplet）（Java 9开始已经废弃）"></a>Java小程序（Appplet）（Java 9开始已经废弃）</h3><p>Applet是嵌入在HTML（超文本标记语言）文档中的Java程序，必须搭配浏览器来运行，因此称 为小程序，也有人称为网页向导。</p>
+<h3 id="Java-Servlet"><a href="#Java-Servlet" class="headerlink" title="Java Servlet"></a>Java Servlet</h3><p>应用于Web服务器</p>
+<h3 id="Android-Application"><a href="#Android-Application" class="headerlink" title="Android Application"></a>Android Application</h3><h3 id="Java应用程序与Java小程序的区别"><a href="#Java应用程序与Java小程序的区别" class="headerlink" title="Java应用程序与Java小程序的区别"></a>Java应用程序与Java小程序的区别</h3><p>小程序和应用程序之间的技术差别在于<strong>运行环境</strong>。</p>
+<p>由于小程序和应用程序的执行环境不同，它们的最低要求也不同。在应用方面，WWW使小程序的发布十分便利，因此小程序更适合在<strong>Internet</strong>上使用；相反，<strong>非网络系统和内存较小的系统</strong>更适合使用Java应用程序。</p>
+<p>Java小程序可以直接利用浏览器或AppletViewer 提供的图形用户界面，而Java应用程序则必须 另外书写专用代码来营建自己的图形界面。</p>
+<p>小程序的主类（程序执行的入口点）必须是一个继承自系统类Applet的子类，且该类必须是 public类。</p>
+<h3 id="Java程序的结构"><a href="#Java程序的结构" class="headerlink" title="Java程序的结构"></a>Java程序的结构</h3><p>一个复杂的程序可以由一个或多个Java源程序文件构成，每个文件中可以有多个类的定义。</p>
+<p>一般的Java源程序文件可以由下列三部分组成：</p>
+<p>​    package语句（0句或1句）；</p>
+<p>​    import语句（0句或多句）；</p>
+<p>​    类定义（1个或多个类定义）。</p>
+<h3 id="Java程序注意事项"><a href="#Java程序注意事项" class="headerlink" title="Java程序注意事项"></a>Java程序注意事项</h3><p>Java是严格区分大小写的语言。</p>
+<p>一个程序中可以有多个类，但只能有一个类是主类。在Java应用程序中，这个主类是指包含main（）方法的类。应用程序的主类不一定要求是public类。主类是Java程序执行的入口点。</p>
+<p>同一个Java程序中定义的若干类之间没有严格的逻辑关系要求，但它们通常是在一起协同工作的， 每一个类都可能需要使用其他类中定义的静态属性或方法。</p>
+<p>Java应用程序是由一系列的类定义构成的</p>
+<p>​    Java程序运行的过程，就是类的对象之间交互的过程。</p>
+<h1 id="第一章-1-Java语言开发环境"><a href="#第一章-1-Java语言开发环境" class="headerlink" title="第一章-1 Java语言开发环境"></a>第一章-1 Java语言开发环境</h1><h2 id="一、Java开发工具"><a href="#一、Java开发工具" class="headerlink" title="一、Java开发工具"></a>一、Java开发工具</h2><p>下载JDK 8的安装包。</p>
+<p>设置环境变量：先设置JAVA_HOME,然后设置PATH。</p>
+<h2 id="二、JDK参考文档下载与安装"><a href="#二、JDK参考文档下载与安装" class="headerlink" title="二、JDK参考文档下载与安装"></a>二、JDK参考文档下载与安装</h2><p>进行JDK参考文档的下载</p>
+<p>帮助文档的使用：在开发中要学会及时查帮助。</p>
+<h2 id="三、JDK的使用"><a href="#三、JDK的使用" class="headerlink" title="三、JDK的使用"></a>三、JDK的使用</h2><h3 id="编译和运行Java应用程序"><a href="#编译和运行Java应用程序" class="headerlink" title="编译和运行Java应用程序"></a>编译和运行Java应用程序</h3><img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516141109266.png" alt="image-20210516141109266" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516141109266.png" class="lozad post-image">
+
+<blockquote>
+<p>javac App2_1.java    （编译）</p>
+<p>java App2_1    （运行）</p>
+<p>java App2_1_1    （运行）</p>
+</blockquote>
+<h3 id="Java应用程序说明"><a href="#Java应用程序说明" class="headerlink" title="Java应用程序说明"></a>Java应用程序说明</h3><p>Java应用程序命名规则：</p>
+<ul>
+<li>​    源文件的扩展名必须是 .java</li>
+<li>​    <u>如果源文件中有多个类，则最多只能有一个public类</u>，如果有的话，那么<strong>源文件的名字必须与这个 public类的名字相同</strong>（文件名的大小写可以与public类名的大小写不同）；</li>
+<li>​    如果源文件没有public类，那么源文件的名字有用户任意命名。主类：main方法是程序入口</li>
+</ul>
+<p>养成良好的编码风格：</p>
+<p>​    命名规则：驼峰命名、帕斯卡命名、匈牙利命名</p>
+<p>​        基本规则是“见文识义”</p>
+<p>​    注释</p>
+<h3 id="JShell"><a href="#JShell" class="headerlink" title="JShell"></a>JShell</h3><p>Java Shell, Java 9 新特性。是一个 REPL（Read-Eval-Print Loop，读取-求值-输出 循环）工具</p>
+<p>​    类似于python解释器或者BASIC解释器， 允许交互式执行Java代码。</p>
+<p>JShell 可以帮助你快速的测试代码。你 可以测试单个语句、测试使用不同的参 数调用方法，也可以在一个 JShell 会 话中测试不熟悉的 APIs。</p>
+<p>但是，JShell 并不是 IDE 的替代品。 当你开发应用时，可以粘贴代码到 JShell 并测试它，然后把测试通过的代 码粘贴到程序编辑器或者 IDE 中。</p>
+<h1 id="第一章-2-Java语言基础知识"><a href="#第一章-2-Java语言基础知识" class="headerlink" title="第一章-2 Java语言基础知识"></a>第一章-2 Java语言基础知识</h1><h2 id="一、Java语言与面向对象的程序设计"><a href="#一、Java语言与面向对象的程序设计" class="headerlink" title="一、Java语言与面向对象的程序设计"></a>一、Java语言与面向对象的程序设计</h2><p>Java语言是一个面向对象的程序设计语言。</p>
+<p>除了面向对象的特点外，Java语言还存在安全性、平台无关性、支持多线程、内存管理等许多方面具有卓越的优点。</p>
+<h3 id="1、面向对象的程序设计思想"><a href="#1、面向对象的程序设计思想" class="headerlink" title="1、面向对象的程序设计思想"></a>1、面向对象的程序设计思想</h3><h4 id="计算机程序设计"><a href="#计算机程序设计" class="headerlink" title="计算机程序设计"></a>计算机程序设计</h4><ul>
+<li>​    对问题进行抽象</li>
+<li>​    用计算机语言表述，利用机器求解</li>
+</ul>
+<h4 id="程序设计语言发展的历程"><a href="#程序设计语言发展的历程" class="headerlink" title="程序设计语言发展的历程"></a>程序设计语言发展的历程</h4><ul>
+<li>​    机器语言</li>
+<li>​    汇编语言</li>
+<li>​    高级语言</li>
+<li>​    面向对象的语言</li>
+</ul>
+<h4 id="面向对象的思想"><a href="#面向对象的思想" class="headerlink" title="面向对象的思想"></a>面向对象的思想</h4><ul>
+<li>​    将客观事物看作具有状态和行为的对象，通过抽象找出同一类对象的共同形态和行为，构成    类。</li>
+<li>​    类是客观世界的概念在计算机世界的反应。</li>
+<li>​    对象是客观世界的实体在计算机世界的反应。</li>
+<li>​    对象是类的实例。</li>
+<li>​    类是对象的类型。类可以理解为比C语言Struct高级的数据类型。</li>
+</ul>
+<p>例如：</p>
+<p>构建一个汽车类，需要提取所有汽车对象 的共有的状态和行为。将状态用变量表示， 行为用方法表示。<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516143752326.png" alt="image-20210516143752326" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516143752326.png" class="lozad post-image"></p>
+<h4 id="面向对象技术给软件发展带来的益处"><a href="#面向对象技术给软件发展带来的益处" class="headerlink" title="面向对象技术给软件发展带来的益处"></a>面向对象技术给软件发展带来的益处</h4><ul>
+<li>​    可重用性</li>
+<li>​    可靠性</li>
+</ul>
+<h4 id="面向对象语言的基本特征"><a href="#面向对象语言的基本特征" class="headerlink" title="面向对象语言的基本特征"></a>面向对象语言的基本特征</h4><ul>
+<li>​    <strong>抽象和封装</strong></li>
+</ul>
+<p>​        抽象的结果形成类，在类中封装了数据以及对数据的操作；同时类对外提供接口并隐藏了实现细节。</p>
+<ul>
+<li>​    <strong>继承性</strong></li>
+</ul>
+<p>​        可以对已有的类增加新的属性和功能，或者进行部分修改来建立新的类，实现代码的重用。</p>
+<ul>
+<li>​    <strong>多态性</strong></li>
+</ul>
+<p>​        同一个消息被不同的对象接收后可以导致不同的行为。（同一个动作名字，不同的动作）</p>
+<h3 id="2-Java语言的特点"><a href="#2-Java语言的特点" class="headerlink" title="2.Java语言的特点"></a>2.Java语言的特点</h3><ul>
+<li>面向对象</li>
+<li>平台无关性<ul>
+<li>编译后的字节码对应于Java虚拟机，因此可在不同平台上运行</li>
+</ul>
+</li>
+<li>多线程<ul>
+<li>Java是第一个在语言级提供内置多线程支持的高级语言</li>
+</ul>
+</li>
+<li>安全性<ul>
+<li>Java不支持指针</li>
+<li>Java的内部安全措施</li>
+</ul>
+</li>
+<li>内存管理<ul>
+<li>Java对内存自动进行管理并进行垃圾回收</li>
+</ul>
+</li>
+<li>Java语言的优点<ul>
+<li>易于学习</li>
+<li>代码效率高</li>
+<li>代码质量高</li>
+<li>开发程序快</li>
+<li>体系结构中立，纯Java程序不依赖于平台</li>
+<li>一处编写，各处运行</li>
+<li>软件易于发布</li>
+</ul>
+</li>
+<li>Java与C++的区别<ul>
+<li>Java中没有#include和#define等预处理功能，用<strong>import</strong>语句来包含其他类和包；</li>
+<li>Java中没有structure，union及typedef；</li>
+<li>Java中没有不属于类成员的函数，没有指针和多重继承，Java只支持<strong>单重继承</strong>；</li>
+<li>Java中禁用goto，但是保留goto关键字；</li>
+<li>Java中没有操作符重载；</li>
+<li>Java中没有全局变量，可以在类中定义公用、静态的数据成员实现相同功能；</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-Java类库"><a href="#3-Java类库" class="headerlink" title="3.Java类库"></a>3.Java类库</h3><p>组成Java程序的最小单元是类，类封装了数据与处理数据的方法。</p>
+<p>对于大多数常用的功能，有大量已经编译好、经过测试的类，这些类的集合就是<strong>Java类库</strong>。</p>
+<p>Java类库主要是随编译器一起提供，也有些类库是由独立软件开发商提供的。</p>
+<h2 id="二、Java5和Java6的新特色"><a href="#二、Java5和Java6的新特色" class="headerlink" title="二、Java5和Java6的新特色"></a>二、Java5和Java6的新特色</h2><p>Java5</p>
+<p>​    增强for循环；<strong>泛型</strong>；<strong>自动装箱拆箱；</strong>枚举类型；<strong>可变长参数；静态import；</strong>注解</p>
+<p>Java6</p>
+<p>​    脚本执行功能；更强的网络服务支持；Java DB；新增桌面API；处理注解；更强的监控和管理；支持对编译器的访问；对XML安全性的支持。</p>
+<h3 id="1-Java5的新特色"><a href="#1-Java5的新特色" class="headerlink" title="1.Java5的新特色"></a>1.Java5的新特色</h3><ul>
+<li>增强for循环：遍历集合类中元素的更方便的方式</li>
+<li>泛型：参数化类型，即所操作的数据类型被指定 为一个参数</li>
+<li>自动装箱拆箱：基本数据类型与其对应类的对象 之间的自动类型转换</li>
+<li>枚举类型：适用于元素为特定值的有限集合</li>
+<li>可变长参数：带省略号的参数，其实质是数组</li>
+<li>静态import：import类的静态成员，从而在使用 时不需要在静态成员名前加上类名</li>
+<li>注解：可用于向程序分析工具提供信息</li>
+</ul>
+<h3 id="2-Java6的新特色"><a href="#2-Java6的新特色" class="headerlink" title="2.Java6的新特色"></a>2.Java6的新特色</h3><ul>
+<li>脚本执行：在Java代码中可以执行脚本</li>
+<li>Java DB：Java 自带的数据库</li>
+<li>新增桌面API：提供类java.awt.DeskTop，用于和系统本身的应用程序交互</li>
+<li>处理注解：提供处理注解功能，从而方便分析 Java程序</li>
+</ul>
+<h2 id="三、Java程序概述"><a href="#三、Java程序概述" class="headerlink" title="三、Java程序概述"></a>三、Java程序概述</h2><h3 id="1-Java开发环境"><a href="#1-Java开发环境" class="headerlink" title="1.Java开发环境"></a>1.Java开发环境</h3><p>一次编写，各处执行</p>
+<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516151153254.png" alt="image-20210516151153254" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516151153254.png" class="lozad post-image">
+
+<p>Java平台</p>
+<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516151213973.png" alt="image-20210516151213973" style="zoom: 50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516151213973.png" class="lozad post-image">
+
+<p>Java APIs（应用程序接口）</p>
+<p>​    经过编译的，可在程序中使用的Java代码标准库。</p>
+<p>Java JVM（虚拟机）</p>
+<p>​    Java程序由Java虚拟机程序执行（解释执行）。</p>
+<p>Java平台 Java2 SDK（Software Development Kit）</p>
+<p>​    J2SE，J2EE，J2ME</p>
+<p><strong>J2SE</strong>——J2SDK的核心部分</p>
+<ul>
+<li>​    开发工具<ul>
+<li>编译器</li>
+<li>调试器</li>
+<li>文档制作工具</li>
+</ul>
+</li>
+<li>运行环境<ul>
+<li>Java虚拟机</li>
+<li>组成Java2平台API的类</li>
+<li>帮助文档</li>
+</ul>
+</li>
+<li>附加库</li>
+<li>Java程序（Applications）的演示</li>
+</ul>
+<p>Java开发工具包括</p>
+<ul>
+<li>javac：Java编译器，用来将Java程序编译成Bytecode。</li>
+<li>Java：Java解释器，执行已经转换成Bytecode的Java应用程序</li>
+<li>Jdb：Java调试器，用来调试Java程序。</li>
+<li>Javap：反编译，将类文件还原回方法和变量。</li>
+<li>Javadoc：文档生成器，创建HTML文件。</li>
+<li>Appletviwer：Applet解释器，用来解释已经转换成Bytecode的Java小应用程序。</li>
+</ul>
+<h3 id="2-Application举例"><a href="#2-Application举例" class="headerlink" title="2.Application举例"></a>2.Application举例</h3><p><strong>Application</strong></p>
+<ul>
+<li>运行在客户端Java虚拟机上的Java程序</li>
+<li>可在客户端机器中读写</li>
+<li>可使用自己的主窗口、标题栏和菜单</li>
+<li>程序可大可小</li>
+<li>能够以命令行方式运行</li>
+<li>主类必须有一个主方法main()，作为程序运行的入 口。</li>
+</ul>
+<h3 id="4-Servlet举例"><a href="#4-Servlet举例" class="headerlink" title="4.Servlet举例"></a>4.Servlet举例</h3><p><strong>Servlet</strong></p>
+<ul>
+<li>运行在服务器端，响应客户端请求，扩展了服务器的功能</li>
+<li>运行Servlet需要服务器的支持，需要在服务器中 进行部署</li>
+<li> Servlet用到的包在J2EE的API中能找到</li>
+<li>所有的servlet都必须实现Servlet接口</li>
+</ul>
+<h3 id="5-JSP举例"><a href="#5-JSP举例" class="headerlink" title="5.JSP举例"></a>5.JSP举例</h3><ul>
+<li>JSP就是嵌入了Java代码的HTML</li>
+<li>JSP和servlet同是服务器端的技术。实际上，JSP 文档在后台被自动转换成servlet</li>
+<li>使用JSP便于实现网页的动静分离</li>
+<li>相对于Servlet，JSP在服务器的部署简单</li>
+</ul>
+<h3 id="6-运行脚本举例"><a href="#6-运行脚本举例" class="headerlink" title="6.运行脚本举例"></a>6.运行脚本举例</h3><ul>
+<li>Java的脚本API提供一个独立于脚本语言，在 Java代码中使用脚本引擎的框架</li>
+<li>通过Java脚本API，可以用Java语言实现一定的功能，而将另外一些功能通过脚本来实现</li>
+<li>脚本的来源可以是Java程序中的<strong>String对象</strong>，也 可以来源于<strong>文件</strong></li>
+</ul>
+<p>脚本来源于String：<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516152942968.png" alt="image-20210516152942968" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516152942968.png" class="lozad post-image"></p>
+<p>脚本来源于文件：<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516153003755.png" alt="image-20210516153003755" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516153003755.png" class="lozad post-image"></p>
+<h2 id="四、基本数据类型与表达式"><a href="#四、基本数据类型与表达式" class="headerlink" title="四、基本数据类型与表达式"></a>四、基本数据类型与表达式</h2><h3 id="1-变量与常量"><a href="#1-变量与常量" class="headerlink" title="1.变量与常量"></a>1.变量与常量</h3><h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a><strong>变量</strong></h4><p><strong>Type varName[=value] [,varName[=value]…]</strong></p>
+<p>▫ 一个由标识符命名的项 </p>
+<p>▫ 每个变量都有类型, 例如 int 类型或 Object类型, 变量还有作用域.</p>
+<p>▫ 变量的值可以被改变</p>
+<p><strong>Java语言程序中可以随时定义变量，不必集中在执行语句之前。</strong></p>
+<p>变量的作用域：</p>
+<p>​    类成员变量的作用域为整个类</p>
+<p>​    方法局部变量的作用域为塌缩在的代码块</p>
+<p>Java语言的复合语句与C语言复合语句不同的是：Java语言<strong>不允许</strong>在两个嵌套的复合语句内生成两个同名的变量。</p>
+<h4 id="Java10新特性"><a href="#Java10新特性" class="headerlink" title="Java10新特性"></a>Java10新特性</h4><p>​    根据局部变量的初始化值，编译器推断出变量类型。从而简化代码书写（语法糖）</p>
+<p>​    适用场合：</p>
+<ol>
+<li>​        局部变量初始化</li>
+<li>​        for循环内部索引变量</li>
+<li>​        传统的for循环声明变量</li>
+</ol>
+<p>不适用场合</p>
+<ol>
+<li>​    方法参数</li>
+<li>​    构造函数参数</li>
+<li>​    方法返回类型</li>
+<li>​    类成员变量类型</li>
+</ol>
+<h4 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h4><p>变量声明前面加上final修饰</p>
+<p><strong>final</strong> Type varName[=value][,varName=value]…];</p>
+<p>常量一旦初始化以后就不可改变。比如：</p>
+<p>​    final int PRICE=30; </p>
+<p>​    final double PI = 3.141592654;</p>
+<h4 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h4><p>标识符是一个名称，与内存中的某个位置（地址）相对应</p>
+<p>标识符的第一个字符必须是下列字符之一：</p>
+<p>​    大写字母 (A-Z)  ； 小写字母 (a-z)  ； 下划线(_)  ； <strong>美元符号 ($)</strong></p>
+<p>标识符的第二个字符及后继字符必须是：</p>
+<p>​    上述列表中的任意字符 ； 数字字符 (0-9)</p>
+<h4 id="变量默认值"><a href="#变量默认值" class="headerlink" title="变量默认值"></a>变量默认值</h4><p><strong>类的成员变量有默认值</strong></p>
+<p>这些变量的存储空间通过new在堆中分配。想象为new操作本身对分配的内存区域首先全部清零。</p>
+<p><strong>方法的局部变量没有默认值</strong></p>
+<p>这些变量的存储空间分配在栈中。随着方法的调用和返回而分配和释放，在这个过程中，无法频繁地进行清零操作，否则大大影响执行效率。</p>
+<h3 id="2-基本数据类型"><a href="#2-基本数据类型" class="headerlink" title="2.基本数据类型"></a>2.基本数据类型</h3><p>![image-20210516154554542](D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516154554542.png)</p>
+<p>文字量（literal）：24、true、’a’等出现在程序中叫做文字量。默认情况下：</p>
+<p>​    整数文字量类型为int, 后面加L或者l成为long型</p>
+<p>​    浮点文字量类型为double, 后面加F或者f成为float</p>
+<p>\r、\n、\t等转义字符与c语言基本对应。字符型 采用unicode编码，转义方法为’\u0000’- ’\uFFFF’</p>
+<h4 id="整数运算"><a href="#整数运算" class="headerlink" title="整数运算"></a>整数运算</h4><p>比较运算符（关系运算符）</p>
+<p>​    算数比较运算符 &lt; , &lt;= , &gt; , &gt;=</p>
+<p>​    算术相等比较运算符 == ， !=</p>
+<p>算术运算符</p>
+<p>​    一元运算符 + ，-</p>
+<p>​    +， -， *， /， %</p>
+<p>​    自增/自减运算符 ++/–</p>
+<p>​    移位运算符 &lt;&lt; , &gt;&gt; , <strong>&gt;&gt;&gt;</strong></p>
+<p>​    位运算符 ~ , &amp; , |, ^</p>
+<p>​    条件运算符 ？：</p>
+<p>​    类型转换运算符</p>
+<p>​    <strong>字符串连接运算符 +</strong></p>
+<p>“&gt;&gt;&gt;”为逻辑右移，移位时最高位补0</p>
+<p>​    ▫ -1&gt;&gt;31 结果为-1 </p>
+<p>​    ▫ -1&gt;&gt;&gt;31 结果为1</p>
+<p><strong>移位运算的移位数，会根据变量字长做调整</strong>。</p>
+<ul>
+<li>比如整数占用四个字节，长度为32, 所以整数移位的最大有效位数为31(5个二进制位)。大于31的数， 会对32取模然后移位</li>
+</ul>
+<h4 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h4><ul>
+<li>float<ul>
+<li>单精度浮点数</li>
+<li>32-bit</li>
+<li>- m·2e ~ m·2e<ul>
+<li>m 是一个小于 <strong>2^24</strong>的正整数</li>
+<li>e 是一个介于 -149和104之间（含）的整数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>double<ul>
+<li>双精度浮点数</li>
+<li>64-bit</li>
+<li>- m·2e ~ m·2e<ul>
+<li>m 是一个小于 2^53的正整数</li>
+<li>e 是一个介于 <strong>-1045和1000</strong>之间（含）的整数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="浮点运算bijiaoyun"><a href="#浮点运算bijiaoyun" class="headerlink" title="浮点运算bijiaoyun"></a>浮点运算bijiaoyun</h4><p>比较运算符（关系运算符）</p>
+<p>​    算数比较运算符 &lt; , &lt;= , &gt; , &gt;=</p>
+<p>​    算术相等比较运算符 == ， !=</p>
+<p>算术运算符</p>
+<p>​    一元运算符 + ，-</p>
+<p>​    +， -， *， /， %</p>
+<p>​    自增/自减运算符 ++/–</p>
+<p>​    移位运算符 &lt;&lt; , &gt;&gt; , <strong>&gt;&gt;&gt;</strong></p>
+<p>​    位运算符 ~ , &amp; , |, ^</p>
+<p>​    条件运算符 ？：</p>
+<p>​    类型转换运算符</p>
+<p>​    <strong>字符串连接运算符 +</strong></p>
+<p><strong>对取模运算符“%”来说，其操作数可以为浮点数。</strong></p>
+<p>即a % b与a-((int)(a/b)*b)的语义相同，这表示a % b 的结果是除完后剩下的浮点数部分。如37.2%10=7.2 。(默认双精度)</p>
+<p>值得注意的是Java语言对加运算符进行了扩展，使 它能够进行字符串的连接，如”abc”+”de”，得到字符 串”abcde” 。</p>
+<h4 id="布尔类型和布尔值"><a href="#布尔类型和布尔值" class="headerlink" title="布尔类型和布尔值"></a>布尔类型和布尔值</h4><p>布尔类型表示一个逻辑量， 有两个取值： true和 false</p>
+<h4 id="布尔运算符"><a href="#布尔运算符" class="headerlink" title="布尔运算符"></a>布尔运算符</h4><ul>
+<li><p>关系运算符 == and != </p>
+</li>
+<li><p>逻辑“非”运算符 ! </p>
+</li>
+<li><p>逻辑运算符 &amp;,  ^ , 和 |</p>
+</li>
+<li><p>条件“与” 和条件“或”运算符 &amp;&amp; 和 ||  </p>
+</li>
+<li><p>条件运算符 ? : </p>
+</li>
+<li><p>字符串连接运算符 +</p>
+</li>
+</ul>
+<p><strong>简洁运算(&amp;&amp;、||)与非简洁运算(&amp;、|)的区别在 于：</strong></p>
+<p>​    非简洁运算在必须计算完左右两个表达式之后，才取结果值；</p>
+<p>​    而简洁运算可能只计算左边的表达式而不计算右边的表达式。</p>
+<p>​    即对于&amp;&amp;，只要 左边表达式为false，就不计算右边表达式，则整 个表达式为false；对于||，只要左边表达式为true ，就不计算右边表达式，则整个表达式为true。</p>
+<h4 id="String——字符串"><a href="#String——字符串" class="headerlink" title="String——字符串"></a>String——字符串</h4><ul>
+<li>String是一个<strong>类</strong></li>
+<li>String类是JDK标准类集合中的一部分</li>
+</ul>
+<p>注意<strong>String是常量</strong>，一旦创建就不能修改。</p>
+<ul>
+<li>意思是字符串里面的字符不能改，不是String变量不能重新赋值。</li>
+<li>比如：String a=”Hello”; a=”World”; 这个是可以的。但是String类的方法没有修改字符的。</li>
+</ul>
+<p>JDK8以及之前可以通过反射修改字符；JDK11已经禁 止了。</p>
+<h4 id="文字量"><a href="#文字量" class="headerlink" title="文字量"></a>文字量</h4><p>直接出现在程序中并被编译器直接使用的值.</p>
+<p>整数文字量</p>
+<ul>
+<li>十进制。15</li>
+<li>十六进制。0xff</li>
+<li>八进制。0377</li>
+</ul>
+<p>浮点文字量</p>
+<p>一个浮点文字量包括以下几个部分：整数部分，小数点，小数部分，指数 (e or E)，类型后缀(f or F for float, d or D for double)</p>
+<p>float类型文字量举例：</p>
+<ul>
+<li>1e 1f 2.f .3f 0f 3.1 4f 6.022137e+23f</li>
+</ul>
+<p>double类型文字量举例：</p>
+<ul>
+<li>1e1 2. .3 0.0 3.1 4 1e-9d 1e137</li>
+</ul>
+<p>布尔文字量</p>
+<ul>
+<li>布尔类型只有两个值，由文字量 true 和 false表示</li>
+</ul>
+<p>字符文字量</p>
+<ul>
+<li>一个字符文字量表示为一个字符或者一个转义序列， 用单引号括起<ul>
+<li>例如 ‘ a ’ ‘Z’ ‘@’</li>
+</ul>
+</li>
+<li>格式字符<ul>
+<li>\b    backspace BS</li>
+<li>\t    horizontal tab HT</li>
+<li>\n    linefeed LF</li>
+<li>\f    form feed FF</li>
+<li>\r    carriage return CR</li>
+<li>\“    double quote”</li>
+<li>\‘    single quote’</li>
+<li>\\    backslash \</li>
+</ul>
+</li>
+</ul>
+<h4 id="字符串文字量"><a href="#字符串文字量" class="headerlink" title="字符串文字量"></a>字符串文字量</h4><ul>
+<li><p>由零个或多个字符组成，以双引号括起</p>
+</li>
+<li><p>每一个字符都可以用转义序列来表示</p>
+</li>
+<li><p>例如： “” // 空字符串 </p>
+<p>“&quot;“ // 只包含 “ 的字符串 </p>
+<p>“This is a string” // 有16个字符的字符串 </p>
+<p>“This is a “ + “string” //字符串常量表达式,由两个字符串常量组成</p>
+</li>
+</ul>
+<h3 id="3-表达式与运算符"><a href="#3-表达式与运算符" class="headerlink" title="3.表达式与运算符"></a>3.表达式与运算符</h3><p>表达式是由一系列变量、运算符、方法调用构成的，表达式可以计算出一个值来</p>
+<p>程序中的很多工作是通过计算表达式的值来完成 的。</p>
+<ul>
+<li>有时需要的是表达式的副作用，例如赋值表达式将数值赋给变量</li>
+<li>更多时候起作用的是表达式的值，这个值可以用作方法的参数，或更大的表达式的操作数，或者 影响语句的执行顺序</li>
+</ul>
+<p>算术运算符 </p>
+<ul>
+<li>▫ 运算符 ++ 和 –  例如： i++; –j; </li>
+<li>▫ 一元运算符 + 和 – </li>
+<li>▫ 加法运算符 + 和 - </li>
+<li>▫ 乘法运算符 * , /, 和 %</li>
+</ul>
+<p>赋值运算符 </p>
+<ul>
+<li><p>▫ 简单赋值运算符 = </p>
+</li>
+<li><p>▫ 复合赋值运算符 *= /= %= += -= &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;=  &amp;= ^= |= </p>
+<p>​    E1 op= E2 等效于 E1 = (T)((E1) op (E2)), 其中T 是 E1 的类型</p>
+</li>
+</ul>
+<p>关系运算符 </p>
+<ul>
+<li><p>▫ 关系表达式的类型永远是布尔类型（bool）</p>
+</li>
+<li><p>▫ 算术比较运算符 &lt;, &lt;=, &gt;, and &gt;=  </p>
+</li>
+<li><p>▫ 类型比较运算符 <strong>instanceof</strong>      用于测试指定对象是否是指定类型(类或子类或接口)的实例</p>
+<p>例如： e instanceof Point //Point 是一个类</p>
+</li>
+</ul>
+<p>相等关系运算符 </p>
+<ul>
+<li>▫ 数字相等运算符 == ， !=  </li>
+<li>▫ 布尔相等运算符 == ， !=  </li>
+<li>▫ 引用相等运算符 == ， !=</li>
+</ul>
+<p>逻辑运算符 </p>
+<ul>
+<li>▫ “与”运算 &amp;&amp;    如果两个操作数的值都为true运算结果为true; 否则，结果为false. </li>
+<li>▫ “或”运算 ||     如果两个操作数的值都为false运算结果为false;否则，结果true </li>
+<li>▫ “非”运算符！  操作数的类型必须是布尔类型 ， 如果操作数的结果为 false，则表达式的结果为 true ， 如果操作数的结果为 true则表达式的结果为 false</li>
+</ul>
+<p>条件运算符 (表达式1？表达式2：表达式3) </p>
+<ul>
+<li>▫ 首先计算表达式1 </li>
+<li>▫ 如果表达式1的值为 true, 则选择表达式2的值 </li>
+<li>▫ 如果表达式1的值为 false,则选择表达式3的值</li>
+</ul>
+<h3 id="4-类型转换"><a href="#4-类型转换" class="headerlink" title="4.类型转换"></a>4.类型转换</h3><p>每个表达式都有类型</p>
+<p>如果表达式的类型对于上下文不合适</p>
+<ul>
+<li>有时可能会导致编译错误</li>
+<li>有时语言会进行隐含类型转换</li>
+</ul>
+<p>扩展转换</p>
+<ul>
+<li>byte, char, short, int, long, float, double</li>
+<li>从一种整数类型到另一种整数类型，或者从 float到double的转换不损失任何信息</li>
+<li><strong>从整数类型向float或double转换，会损失精度</strong></li>
+<li>如：int n = 123456789; float f =n; <strong>运行结果是：1.23456792E8</strong></li>
+</ul>
+<p>窄化转换</p>
+<ul>
+<li>double, float, long, int, short, byte,char</li>
+<li>窄化转换可能会丢失信息</li>
+</ul>
+<p>赋值转换</p>
+<p>​    将表达式类型转换为指定变量的类型</p>
+<p>方法调用转换</p>
+<p>​    适用于方法或构造方法调用中的每一个参数</p>
+<p>强制转换</p>
+<p>​    适用于方法或构造方法调用中的每一个参数</p>
+<p>​    例如 (float)5.0</p>
+<p>字符串转换</p>
+<p>​    任何类型（包括null类型）都可以转换为字符串类型</p>
+<p>​    只当一个操作数是String类型时， 适用于+运算符的操作数</p>
+<p><strong>数字提升</strong></p>
+<p>​    将算术运算符的操作数转换为共同类型</p>
+<ul>
+<li>一元数字提升<ul>
+<li>如果一个操作数是byte，short，或char类型，一元数字提升通过扩展转换将它转换为int类型</li>
+</ul>
+</li>
+<li>二元数字提升<ul>
+<li>二元数字提升作用在特定操作符的操作数上 *, /, %, +, -, &lt;, &lt;=, &gt;, &gt;=, ==, !=, &amp;, ^, | and?:</li>
+<li>在必要时使用扩展转换来转换操作数类型</li>
+</ul>
+</li>
+</ul>
+<h3 id="标准输入输出简介"><a href="#标准输入输出简介" class="headerlink" title="标准输入输出简介"></a>标准输入输出简介</h3><p>• 标准输入流 System.in </p>
+<p>• 标准输出流 System.out</p>
+<p>例如：System.out.println(“Hello world!”);</p>
+<h3 id="补充：引用（Reference）"><a href="#补充：引用（Reference）" class="headerlink" title="补充：引用（Reference）"></a>补充：引用（Reference）</h3><p>Java语言没有指针，但是有“引用”。引用是一个地址，指向对象所在的位置。在这个位置，存储着对象的变量和方法的入口地址。</p>
+<p>引用在很多方面类似于C/C++语言的指针, 但是又有很重要的区别:</p>
+<ul>
+<li>在Java中不能进行指针的运算，比如C语言中对指针的加减运算。</li>
+<li>Java中的引用类型检查和控制更加严格，不向C/C++语言中，类型转换比较灵活。</li>
+<li>程序员可以使用引用访问对象，但是<strong>具体地址对程序员不可见</strong>。</li>
+<li>在C++ 11中，引入了“智能指针”，与Java的引用 作用类似(shared_ptr、unique_ptr、weak_ptr)。</li>
+<li>Java有下列几种引用变量：<ul>
+<li>Class，Annotation，Array，Enumeration，Interface</li>
+</ul>
+</li>
+<li>Java引用变量的默认初值是<strong>null</strong></li>
+<li>Java对象的创建使用<strong>new关键字</strong>，比如：<ul>
+<li>class Point {…..} </li>
+<li>Point p = new Point();</li>
+</ul>
+</li>
+<li>Java中，p是一个引用变量，又叫做Point类的<strong>实例变量</strong></li>
+</ul>
+<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516164859475.png" alt="image-20210516164859475" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516164859475.png" class="lozad post-image">
+
+<h2 id="五、数组的概念"><a href="#五、数组的概念" class="headerlink" title="五、数组的概念"></a>五、数组的概念</h2><p>数组由同一类型的一连串<strong>对象或者基本数据</strong>组成，并封装在同一个标识符（数组名称）下。</p>
+<p><strong>数组是对象</strong></p>
+<ul>
+<li>动态初始化</li>
+<li>可以复制给Object类型的变量</li>
+<li>在数组中可以调用类Object的所有方法</li>
+</ul>
+<p>数组元素</p>
+<ul>
+<li><p>数组中的变量被称作数组的元素</p>
+</li>
+<li><p>元素没有名字，通过数组名字和非负整数下标值 引用数组元素</p>
+</li>
+<li><p>每个数组都有一个由 <strong>public final</strong> 修饰的成员变量：<strong>length</strong>（&gt;=0），即数组含有元素的个数</p>
+<ul>
+<li><p>注意：对比字符串长度是一个方法：</p>
+<p>String str = “Hello”; </p>
+<p>int len = str.length();</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="六、数组的创建和引用"><a href="#六、数组的创建和引用" class="headerlink" title="六、数组的创建和引用"></a>六、数组的创建和引用</h2><h3 id="1-数组的声明"><a href="#1-数组的声明" class="headerlink" title="1.数组的声明"></a>1.数组的声明</h3><p>声明</p>
+<ul>
+<li>声明数组时无需指定数组元素的个数，也不为数组元素分配内存空间</li>
+<li>不能直接使用，必须经过初始化分配内存后才能使用</li>
+<li>Type[ ] arrayName;<ul>
+<li>例如： int[] intArray;  String[] stringArray;</li>
+</ul>
+</li>
+<li>Type arrayName[ ];<ul>
+<li>例如： int intArray[];  String stringArray[];</li>
+</ul>
+</li>
+</ul>
+<p>用关键字new构成数组的创建表达式，可以指定数组的类型和数组元素的个数。<strong>元素个数可以是常量也可以是变量</strong></p>
+<p>基本类型数组的每个元素都是一个基本类型的变 量；引用类型数组的每个元素都是对象的的引用</p>
+<h3 id="2-数组的创建"><a href="#2-数组的创建" class="headerlink" title="2.数组的创建"></a>2.数组的创建</h3><p><strong>arryName=new Type[componets number];</strong></p>
+<p>▫ 例如： int[] ai; ai=new int[10]; </p>
+<p>​                String[] s; s=new String[3]; </p>
+<p>▫ 或者可以将数组的声明和创建一并执行 </p>
+<p>​    int ai[]=new int[10]; </p>
+<p>▫ 可以在一条声明语句中创建多个数组 </p>
+<p>​    String[] s1=new String[3], s2=new String[8];</p>
+<h3 id="3-数组的初始化"><a href="#3-数组的初始化" class="headerlink" title="3.数组的初始化"></a>3.数组的初始化</h3><p>声明数组名时，给出了数组的初始值，程序 便会利用数组初始值创建数组并对它的各个元 素进行初始化。</p>
+<p><strong>int a[]={22, 33, 44, 55};</strong></p>
+<p>创建数组的时，如果没有指定初始值，数组便被赋予<strong>默认值初始值</strong>。</p>
+<ul>
+<li>基本类型数值数据，默认的初始值为0；</li>
+<li>boolean类型数据，默认值为false;</li>
+<li>引用类型元素的默认值为null。</li>
+</ul>
+<p>程序也可以在数组被构造之后改变数组元素值</p>
+<h3 id="4-数组的引用"><a href="#4-数组的引用" class="headerlink" title="4.数组的引用"></a>4.数组的引用</h3><p>通过下面的表达式引用数组的一个元素： <strong>arrayName[index]</strong></p>
+<p>数组下标必须是 int , short, byte, 或者 char</p>
+<p>下标从零开始计数</p>
+<p>元素的个数即为数组的长度，可以通过<strong>arryName.length</strong>引用</p>
+<p>元素下标最大值为 length – 1，如果超过最大值， 将会产生数组越界异常（ArrayIndexOutOfBoundsException）</p>
+<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516173050713.png" alt="image-20210516173050713" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516173050713.png" class="lozad post-image">
+
+<p><strong>数组名是一个引用</strong></p>
+<pre class="highlight"><span class="line">public class Arrays </span><br><span class="line">&#123; public static void main(String[] args) </span><br><span class="line">&#123; int[] a1 = &#123; 1, 2, 3, 4, 5 &#125;; </span><br><span class="line">int[] a2; </span><br><span class="line">a2 = a1; //a2和a1指向同一个数组</span><br><span class="line">for(int i = 0; i &lt; a2.length; i++) a2[i]++; </span><br><span class="line">for(int i = 0; i &lt; a1.length; i++) </span><br><span class="line">System.out.println( &quot;a1[&quot; + i + &quot;] = &quot; + a1[i]); </span><br><span class="line">&#125;&#125; </span><br></pre>
+
+<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516173212677.png" alt="image-20210516173212677" style="zoom: 50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516173212677.png" class="lozad post-image">
+
+<p>字符串引用构成的数组：</p>
+<pre class="highlight"><span class="line">String[] strArray;</span><br><span class="line">strArray = <span class="keyword">new</span> String[<span class="number">8</span>]; </span><br><span class="line">strArray[<span class="number">0</span>] = <span class="string">&quot;Hello&quot;</span>;</span><br></pre>
+
+<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516173450368.png" alt="image-20210516173450368" style="zoom: 67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516173450368.png" class="lozad post-image">
+
+<p><strong>数组的复制</strong>：System类提供的方法</p>
+<pre class="highlight"><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">arraycopy</span><span class="params">(Object source , <span class="keyword">int</span> srcIndex , </span></span></span><br><span class="line"><span class="params"><span class="function">                             Object dest , <span class="keyword">int</span> destIndex , <span class="keyword">int</span> length )</span></span></span><br><span class="line"><span class="function">   </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> class ArrayCopyDemo </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span>[] copyFrom = &#123; <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;f&#x27;</span>, <span class="string">&#x27;f&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, </span><br><span class="line">    	<span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;n&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;t&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;d&#x27;</span>&#125;; </span><br><span class="line">    	<span class="keyword">char</span>[] copyTo = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">7</span>]; </span><br><span class="line">    	System.arraycopy(copyFrom, <span class="number">2</span>, copyTo, <span class="number">0</span>, <span class="number">7</span>); </span><br><span class="line">    	System.out.println(<span class="keyword">new</span> String(copyTo));</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre>
+
+<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516173656930.png" alt="image-20210516173656930" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516173656930.png" class="lozad post-image">
+
+<p>注意：如果数组元素为引用类型，则复制就是所谓的“<strong>浅复制</strong>”。也就是复制的数组元素和被复制的数组元素指向同一个对象(Shallow copy)。</p>
+<h3 id="5-多维数组"><a href="#5-多维数组" class="headerlink" title="5.多维数组"></a>5.多维数组</h3><pre class="highlight"><span class="line"><span class="keyword">int</span>[][] gradeTable;</span><br><span class="line"></span><br><span class="line">gradeTable[ <span class="number">0</span> ][ <span class="number">1</span> ] 为<span class="number">42</span></span><br><span class="line">gradeTable[ <span class="number">3</span> ][ <span class="number">4</span> ] 为<span class="number">93</span></span><br><span class="line">gradeTable[ <span class="number">6</span> ][ <span class="number">2</span> ] 为<span class="number">78</span></span><br></pre>
+
+<img src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516174129893.png" alt="image-20210516174129893" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第一章 Java语言概述.assets\image-20210516174129893.png" class="lozad post-image">
+
+<p>二维数组的声明和构造</p>
+<ul>
+<li>int[ ] [ ] myArray ;<ul>
+<li>myArray 可以存储一个指向2维整数数组的引用。 其初始值为null。</li>
+</ul>
+</li>
+<li>int [ ] [ ] myArray = new int[3] [5];<ul>
+<li>建立一个数组对象，把引用存储到myArray。这个 数组所有元素的初始值为零。</li>
+</ul>
+</li>
+<li>int[ ] [ ] myArray = { {8,1,2,2,9}, {1,9,4,0,3},  {0,3,0,0,7} };<ul>
+<li>建立一个数组并为每一个元素赋值。</li>
+</ul>
+</li>
+</ul>
+<p>二维数组的长度</p>
+<pre class="highlight"><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnevenExample2</span></span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[ ] arg )</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[ ][ ] uneven = </span><br><span class="line">        &#123; &#123; <span class="number">1</span>, <span class="number">9</span>, <span class="number">4</span> &#125;,</span><br><span class="line">        &#123; <span class="number">0</span>, <span class="number">2</span>&#125;,</span><br><span class="line">        &#123; <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span> &#125; &#125;;</span><br><span class="line">        System.out.println(<span class="string">&quot;Length is: &quot;</span> + uneven.length );</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;</span><br></pre>
+
+<p>运行结果：Length is ： 3</p>
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            xuehongfei
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="http://example.com/2021/08/05/01-Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0/">
+            http://example.com/2021/08/05/01-Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0/
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+    <div class="nav-item-prev">
+      <a 
+        href="/2021/08/05/02-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" 
+        class="nav-link">
+        <i class="iconfont icon-left nav-prev-icon"></i>
+        <div>
+          <div class="nav-label">Prev</div>
+          
+            <div class="nav-title">02 类与对象的基本概念 </div>
+          
+        </div>
+      </a>
+    </div>
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/2021/08/05/test-my-site/" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">Next</div>
+          
+            <div class="nav-title">test_my_site </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-0-Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0"><span class="toc-text">第一章-0 Java语言概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AF%9E%E7%94%9F%E4%B8%8E%E5%8F%91%E5%B1%95"><span class="toc-text">一、Java语言的诞生与发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java%E8%AF%AD%E8%A8%80%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">二、Java语言的特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Java%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B"><span class="toc-text">三、Java技术简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Java%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">四、Java虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JIT%E4%B8%8EJVM%E7%9A%84%E4%B8%89%E7%A7%8D%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%BC%8F%EF%BC%9A%E8%A7%A3%E9%87%8A%E6%A8%A1%E5%BC%8F%E3%80%81%E7%BC%96%E8%AF%91%E6%A8%A1%E5%BC%8F%E3%80%81%E6%B7%B7%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="toc-text">JIT与JVM的三种执行模式：解释模式、编译模式、混合模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Java%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%A7%8D%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84"><span class="toc-text">五、Java程序的种类和结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%88Application%EF%BC%89"><span class="toc-text">Java应用程序（Application）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%88Appplet%EF%BC%89%EF%BC%88Java-9%E5%BC%80%E5%A7%8B%E5%B7%B2%E7%BB%8F%E5%BA%9F%E5%BC%83%EF%BC%89"><span class="toc-text">Java小程序（Appplet）（Java 9开始已经废弃）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-Servlet"><span class="toc-text">Java Servlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Application"><span class="toc-text">Android Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%8EJava%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">Java应用程序与Java小程序的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">Java程序的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E7%A8%8B%E5%BA%8F%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">Java程序注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-1-Java%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-text">第一章-1 Java语言开发环境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-text">一、Java开发工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JDK%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="toc-text">二、JDK参考文档下载与安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81JDK%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">三、JDK的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8CJava%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">编译和运行Java应用程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%AF%B4%E6%98%8E"><span class="toc-text">Java应用程序说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JShell"><span class="toc-text">JShell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-2-Java%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">第一章-2 Java语言基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E8%AF%AD%E8%A8%80%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">一、Java语言与面向对象的程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="toc-text">1、面向对象的程序设计思想</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">计算机程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E5%8F%91%E5%B1%95%E7%9A%84%E5%8E%86%E7%A8%8B"><span class="toc-text">程序设计语言发展的历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%80%9D%E6%83%B3"><span class="toc-text">面向对象的思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%8A%80%E6%9C%AF%E7%BB%99%E8%BD%AF%E4%BB%B6%E5%8F%91%E5%B1%95%E5%B8%A6%E6%9D%A5%E7%9A%84%E7%9B%8A%E5%A4%84"><span class="toc-text">面向对象技术给软件发展带来的益处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AF%AD%E8%A8%80%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81"><span class="toc-text">面向对象语言的基本特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Java%E8%AF%AD%E8%A8%80%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">2.Java语言的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Java%E7%B1%BB%E5%BA%93"><span class="toc-text">3.Java类库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java5%E5%92%8CJava6%E7%9A%84%E6%96%B0%E7%89%B9%E8%89%B2"><span class="toc-text">二、Java5和Java6的新特色</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Java5%E7%9A%84%E6%96%B0%E7%89%B9%E8%89%B2"><span class="toc-text">1.Java5的新特色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Java6%E7%9A%84%E6%96%B0%E7%89%B9%E8%89%B2"><span class="toc-text">2.Java6的新特色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Java%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%BF%B0"><span class="toc-text">三、Java程序概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Java%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-text">1.Java开发环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Application%E4%B8%BE%E4%BE%8B"><span class="toc-text">2.Application举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Servlet%E4%B8%BE%E4%BE%8B"><span class="toc-text">4.Servlet举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-JSP%E4%B8%BE%E4%BE%8B"><span class="toc-text">5.JSP举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E4%B8%BE%E4%BE%8B"><span class="toc-text">6.运行脚本举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">四、基本数据类型与表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%98%E9%87%8F%E4%B8%8E%E5%B8%B8%E9%87%8F"><span class="toc-text">1.变量与常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java10%E6%96%B0%E7%89%B9%E6%80%A7"><span class="toc-text">Java10新特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-text">变量默认值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">2.基本数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97"><span class="toc-text">整数运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-text">浮点数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97bijiaoyun"><span class="toc-text">浮点运算bijiaoyun</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%B8%83%E5%B0%94%E5%80%BC"><span class="toc-text">布尔类型和布尔值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">布尔运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#String%E2%80%94%E2%80%94%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">String——字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E9%87%8F"><span class="toc-text">文字量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%87%E5%AD%97%E9%87%8F"><span class="toc-text">字符串文字量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">3.表达式与运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">4.类型转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%AE%80%E4%BB%8B"><span class="toc-text">标准输入输出简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9A%E5%BC%95%E7%94%A8%EF%BC%88Reference%EF%BC%89"><span class="toc-text">补充：引用（Reference）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E7%BB%84%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">五、数组的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E5%BC%95%E7%94%A8"><span class="toc-text">六、数组的创建和引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E7%BB%84%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="toc-text">1.数组的声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">2.数组的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">3.数组的初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%95%B0%E7%BB%84%E7%9A%84%E5%BC%95%E7%94%A8"><span class="toc-text">4.数组的引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="toc-text">5.多维数组</span></a></li></ol></li></ol></li></ol>
+</div></main>
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="img/catton.jpg" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">xuehongfei</p>
+<p class="author-description">designed by Mr.Xue</p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>7</span>
+    <span>Posts</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>0</span>
+    <span>Categories</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>0</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-0-Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0"><span class="toc-text">第一章-0 Java语言概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AF%9E%E7%94%9F%E4%B8%8E%E5%8F%91%E5%B1%95"><span class="toc-text">一、Java语言的诞生与发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java%E8%AF%AD%E8%A8%80%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">二、Java语言的特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Java%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B"><span class="toc-text">三、Java技术简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Java%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">四、Java虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JIT%E4%B8%8EJVM%E7%9A%84%E4%B8%89%E7%A7%8D%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%BC%8F%EF%BC%9A%E8%A7%A3%E9%87%8A%E6%A8%A1%E5%BC%8F%E3%80%81%E7%BC%96%E8%AF%91%E6%A8%A1%E5%BC%8F%E3%80%81%E6%B7%B7%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="toc-text">JIT与JVM的三种执行模式：解释模式、编译模式、混合模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Java%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%A7%8D%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84"><span class="toc-text">五、Java程序的种类和结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%88Application%EF%BC%89"><span class="toc-text">Java应用程序（Application）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%88Appplet%EF%BC%89%EF%BC%88Java-9%E5%BC%80%E5%A7%8B%E5%B7%B2%E7%BB%8F%E5%BA%9F%E5%BC%83%EF%BC%89"><span class="toc-text">Java小程序（Appplet）（Java 9开始已经废弃）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-Servlet"><span class="toc-text">Java Servlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Application"><span class="toc-text">Android Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%8EJava%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">Java应用程序与Java小程序的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">Java程序的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E7%A8%8B%E5%BA%8F%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">Java程序注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-1-Java%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-text">第一章-1 Java语言开发环境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-text">一、Java开发工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JDK%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="toc-text">二、JDK参考文档下载与安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81JDK%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">三、JDK的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8CJava%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">编译和运行Java应用程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%AF%B4%E6%98%8E"><span class="toc-text">Java应用程序说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JShell"><span class="toc-text">JShell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-2-Java%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">第一章-2 Java语言基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E8%AF%AD%E8%A8%80%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">一、Java语言与面向对象的程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="toc-text">1、面向对象的程序设计思想</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">计算机程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E5%8F%91%E5%B1%95%E7%9A%84%E5%8E%86%E7%A8%8B"><span class="toc-text">程序设计语言发展的历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%80%9D%E6%83%B3"><span class="toc-text">面向对象的思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%8A%80%E6%9C%AF%E7%BB%99%E8%BD%AF%E4%BB%B6%E5%8F%91%E5%B1%95%E5%B8%A6%E6%9D%A5%E7%9A%84%E7%9B%8A%E5%A4%84"><span class="toc-text">面向对象技术给软件发展带来的益处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AF%AD%E8%A8%80%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81"><span class="toc-text">面向对象语言的基本特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Java%E8%AF%AD%E8%A8%80%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">2.Java语言的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Java%E7%B1%BB%E5%BA%93"><span class="toc-text">3.Java类库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java5%E5%92%8CJava6%E7%9A%84%E6%96%B0%E7%89%B9%E8%89%B2"><span class="toc-text">二、Java5和Java6的新特色</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Java5%E7%9A%84%E6%96%B0%E7%89%B9%E8%89%B2"><span class="toc-text">1.Java5的新特色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Java6%E7%9A%84%E6%96%B0%E7%89%B9%E8%89%B2"><span class="toc-text">2.Java6的新特色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Java%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%BF%B0"><span class="toc-text">三、Java程序概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Java%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-text">1.Java开发环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Application%E4%B8%BE%E4%BE%8B"><span class="toc-text">2.Application举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Servlet%E4%B8%BE%E4%BE%8B"><span class="toc-text">4.Servlet举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-JSP%E4%B8%BE%E4%BE%8B"><span class="toc-text">5.JSP举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E4%B8%BE%E4%BE%8B"><span class="toc-text">6.运行脚本举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">四、基本数据类型与表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%98%E9%87%8F%E4%B8%8E%E5%B8%B8%E9%87%8F"><span class="toc-text">1.变量与常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java10%E6%96%B0%E7%89%B9%E6%80%A7"><span class="toc-text">Java10新特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-text">变量默认值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">2.基本数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97"><span class="toc-text">整数运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-text">浮点数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97bijiaoyun"><span class="toc-text">浮点运算bijiaoyun</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%B8%83%E5%B0%94%E5%80%BC"><span class="toc-text">布尔类型和布尔值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">布尔运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#String%E2%80%94%E2%80%94%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">String——字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E9%87%8F"><span class="toc-text">文字量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%87%E5%AD%97%E9%87%8F"><span class="toc-text">字符串文字量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">3.表达式与运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">4.类型转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%AE%80%E4%BB%8B"><span class="toc-text">标准输入输出简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9A%E5%BC%95%E7%94%A8%EF%BC%88Reference%EF%BC%89"><span class="toc-text">补充：引用（Reference）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E7%BB%84%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">五、数组的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E5%BC%95%E7%94%A8"><span class="toc-text">六、数组的创建和引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E7%BB%84%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="toc-text">1.数组的声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">2.数组的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">3.数组的初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%95%B0%E7%BB%84%E7%9A%84%E5%BC%95%E7%94%A8"><span class="toc-text">4.数组的引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="toc-text">5.多维数组</span></a></li></ol></li></ol></li></ol>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>Categories
+  </div>
+  <div class="categories-list">
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>hot tags
+  </div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-0-Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0"><span class="toc-text">第一章-0 Java语言概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AF%9E%E7%94%9F%E4%B8%8E%E5%8F%91%E5%B1%95"><span class="toc-text">一、Java语言的诞生与发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java%E8%AF%AD%E8%A8%80%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">二、Java语言的特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Java%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B"><span class="toc-text">三、Java技术简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Java%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">四、Java虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JIT%E4%B8%8EJVM%E7%9A%84%E4%B8%89%E7%A7%8D%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%BC%8F%EF%BC%9A%E8%A7%A3%E9%87%8A%E6%A8%A1%E5%BC%8F%E3%80%81%E7%BC%96%E8%AF%91%E6%A8%A1%E5%BC%8F%E3%80%81%E6%B7%B7%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="toc-text">JIT与JVM的三种执行模式：解释模式、编译模式、混合模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Java%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%A7%8D%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84"><span class="toc-text">五、Java程序的种类和结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%88Application%EF%BC%89"><span class="toc-text">Java应用程序（Application）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%88Appplet%EF%BC%89%EF%BC%88Java-9%E5%BC%80%E5%A7%8B%E5%B7%B2%E7%BB%8F%E5%BA%9F%E5%BC%83%EF%BC%89"><span class="toc-text">Java小程序（Appplet）（Java 9开始已经废弃）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-Servlet"><span class="toc-text">Java Servlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Application"><span class="toc-text">Android Application</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%8EJava%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">Java应用程序与Java小程序的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">Java程序的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E7%A8%8B%E5%BA%8F%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">Java程序注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-1-Java%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-text">第一章-1 Java语言开发环境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-text">一、Java开发工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81JDK%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="toc-text">二、JDK参考文档下载与安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81JDK%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">三、JDK的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8CJava%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">编译和运行Java应用程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%AF%B4%E6%98%8E"><span class="toc-text">Java应用程序说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JShell"><span class="toc-text">JShell</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-2-Java%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">第一章-2 Java语言基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Java%E8%AF%AD%E8%A8%80%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">一、Java语言与面向对象的程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="toc-text">1、面向对象的程序设计思想</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">计算机程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E5%8F%91%E5%B1%95%E7%9A%84%E5%8E%86%E7%A8%8B"><span class="toc-text">程序设计语言发展的历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%80%9D%E6%83%B3"><span class="toc-text">面向对象的思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%8A%80%E6%9C%AF%E7%BB%99%E8%BD%AF%E4%BB%B6%E5%8F%91%E5%B1%95%E5%B8%A6%E6%9D%A5%E7%9A%84%E7%9B%8A%E5%A4%84"><span class="toc-text">面向对象技术给软件发展带来的益处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AF%AD%E8%A8%80%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E5%BE%81"><span class="toc-text">面向对象语言的基本特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Java%E8%AF%AD%E8%A8%80%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">2.Java语言的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Java%E7%B1%BB%E5%BA%93"><span class="toc-text">3.Java类库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Java5%E5%92%8CJava6%E7%9A%84%E6%96%B0%E7%89%B9%E8%89%B2"><span class="toc-text">二、Java5和Java6的新特色</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Java5%E7%9A%84%E6%96%B0%E7%89%B9%E8%89%B2"><span class="toc-text">1.Java5的新特色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Java6%E7%9A%84%E6%96%B0%E7%89%B9%E8%89%B2"><span class="toc-text">2.Java6的新特色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Java%E7%A8%8B%E5%BA%8F%E6%A6%82%E8%BF%B0"><span class="toc-text">三、Java程序概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Java%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-text">1.Java开发环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Application%E4%B8%BE%E4%BE%8B"><span class="toc-text">2.Application举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Servlet%E4%B8%BE%E4%BE%8B"><span class="toc-text">4.Servlet举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-JSP%E4%B8%BE%E4%BE%8B"><span class="toc-text">5.JSP举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%E4%B8%BE%E4%BE%8B"><span class="toc-text">6.运行脚本举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">四、基本数据类型与表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%98%E9%87%8F%E4%B8%8E%E5%B8%B8%E9%87%8F"><span class="toc-text">1.变量与常量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-text">变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java10%E6%96%B0%E7%89%B9%E6%80%A7"><span class="toc-text">Java10新特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-text">变量默认值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">2.基本数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E8%BF%90%E7%AE%97"><span class="toc-text">整数运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-text">浮点数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97bijiaoyun"><span class="toc-text">浮点运算bijiaoyun</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%B8%83%E5%B0%94%E5%80%BC"><span class="toc-text">布尔类型和布尔值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">布尔运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#String%E2%80%94%E2%80%94%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">String——字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E9%87%8F"><span class="toc-text">文字量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%87%E5%AD%97%E9%87%8F"><span class="toc-text">字符串文字量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">3.表达式与运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">4.类型转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%AE%80%E4%BB%8B"><span class="toc-text">标准输入输出简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9A%E5%BC%95%E7%94%A8%EF%BC%88Reference%EF%BC%89"><span class="toc-text">补充：引用（Reference）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E7%BB%84%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">五、数组的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E5%BC%95%E7%94%A8"><span class="toc-text">六、数组的创建和引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E7%BB%84%E7%9A%84%E5%A3%B0%E6%98%8E"><span class="toc-text">1.数组的声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">2.数组的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">3.数组的初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%95%B0%E7%BB%84%E7%9A%84%E5%BC%95%E7%94%A8"><span class="toc-text">4.数组的引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="toc-text">5.多维数组</span></a></li></ol></li></ol></li></ol>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>Recent Posts
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-05</div>
+        <a href="/2021/08/05/05-%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%A4%9A%E6%80%81/"><div class="recent-posts-item-content">05 接口与多态</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-05</div>
+        <a href="/2021/08/05/04-%E7%B1%BB%E7%9A%84%E9%87%8D%E7%94%A8/"><div class="recent-posts-item-content">04 类的重用</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-05</div>
+        <a href="/2021/08/05/03-%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95/"><div class="recent-posts-item-content">03 类中的方法</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-05</div>
+        <a href="/2021/08/05/02-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"><div class="recent-posts-item-content">02 类与对象的基本概念</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2020 -
+          
+          2021
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          Mr.Xue's Blog
+        </a>
+      </div>
+    </div>
+
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://hexo.io/" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;Hexo
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Theme -
+          <a 
+            href="https://github.com/theme-kaze" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;Kaze
+          </a>
+        
+      </div>
+    
+    
+    
+    
+</footer> 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+     
+    
+    
+  </body>
+</html>
