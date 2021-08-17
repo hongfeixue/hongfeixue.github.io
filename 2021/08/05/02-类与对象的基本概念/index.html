@@ -45,7 +45,7 @@
         content="2021-08-05">
       <meta 
         property="og:article:modified_time" 
-        content="2021-08-05">
+        content="2021-08-17">
       <meta 
         property="og:article:author" 
         content="xuehongfei">
@@ -308,8 +308,7 @@
 <p>封装的目的在于将对象的使用者和设计者分开，使用者不必知道行为实现的细节，只需使用设计者提供的消息来访问对象。</p>
 <p>封装的定义：清楚的边界（所有对象的内部信息被限定在这个边界内）；接口（对象向外界提供的方法，外界可以通过这些方法与对象进行交互）；受保护的内部实现（功能的实现细节，不能从类外访问）。</p>
 <p>类的示意图，体现了封装和数据抽象。</p>
-<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518112706523.png" alt="image-20210518112706523" style="zoom: 50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518112706523.png" class="lozad post-image">
-
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201512843.png" alt="image-20210817201512843" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201512843.png" class="lozad post-image"></p>
 <h4 id="3-继承"><a href="#3-继承" class="headerlink" title="3.继承"></a>3.继承</h4><p>是指新的类可以获得已有类（称为超类、基类或<strong>父类</strong>）的属性和行为，称新类为已有类的派生类（也称为<strong>子类</strong>）</p>
 <p>在继承过程中派生类继承了基类的特性，包括方法和实例变量</p>
 <p>派生类也可修改继承的方法或增加新的方法，使之 更适合特殊的需要</p>
@@ -322,8 +321,7 @@
 <p>类层次结构为网状结构，设计及实现比较复杂</p>
 <p><strong>Java语言仅支持单继承</strong></p>
 <p>对象的实体构成示意图（假设父类可以实例化，也就是父类不是抽象类）</p>
-<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518113159695.png" alt="image-20210518113159695" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518113159695.png" class="lozad post-image">
-
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201533060.png" alt="image-20210817201533060" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201533060.png" class="lozad post-image"></p>
 <h4 id="4-多态"><a href="#4-多态" class="headerlink" title="4.多态"></a>4.多态</h4><p><strong>一个程序中同名的不同方法共存</strong></p>
 <p>主要通过子类对父类方法地覆盖来实现</p>
 <p>​    接口方法覆盖、方法重载也是实现多态的具体形式。</p>
@@ -390,8 +388,7 @@
 <p><strong>自动装箱拆箱</strong></p>
 <p>支持自动装箱和自动拆箱的类型</p>
 <p>这些都是基本数据类型的包装类</p>
-<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518115709299.png" alt="image-20210518115709299" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518115709299.png" class="lozad post-image">
-
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201559903.png" alt="image-20210817201559903" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201559903.png" class="lozad post-image"></p>
 <h3 id="3-数据成员"><a href="#3-数据成员" class="headerlink" title="3.数据成员"></a>3.数据成员</h3><p>表示Java类的状态</p>
 <p>声明数据成员必须给出变量名及其所属的类型，同时还可以指定其他特性</p>
 <p>在一个类中成员变量名是唯一的</p>
@@ -410,12 +407,10 @@
 <p>用来存储所有实例都需要的属性信息，不同实例的属性值可能会不同</p>
 <p>可通过下面的表达式访问实例属性的值    <strong>&lt;实例名&gt;.&lt;实例变量名&gt;</strong></p>
 <p>实例变量属于特定的对象，在创建对象时<strong>存储在堆中</strong>。</p>
-<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518140433125.png" alt="image-20210518140433125" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518140433125.png" class="lozad post-image">
-
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201649113.png" alt="image-20210817201649113" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201649113.png" class="lozad post-image"></p>
 <pre class="highlight"><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>&#123; </span><br><span class="line"><span class="keyword">int</span> radius; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShapeTester</span> </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123; </span><br><span class="line">Circle x; </span><br><span class="line">x = <span class="keyword">new</span> Circle(); </span><br><span class="line">System.out.println(x);</span><br><span class="line">System.out.println(<span class="string">&quot;radius = &quot;</span> + x.radius); </span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br></pre>
 
-<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518140728958.png" alt="image-20210518140728958" style="zoom: 67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518140728958.png" class="lozad post-image">
-
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201708120.png" alt="image-20210817201708120" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201708120.png" class="lozad post-image"></p>
 <h4 id="类变量"><a href="#类变量" class="headerlink" title="类变量"></a>类变量</h4><p>也成为静态变量，声明时需加static修饰符</p>
 <p>不管类的对象有多少，<strong>类变量只存在一份</strong>，在整个类中只有一个值</p>
 <p>类初始化的同时就被赋值</p>
@@ -423,7 +418,8 @@
 <p>引用格式    <strong>&lt;类名 | 实例名&gt;.&lt;类变量名&gt;</strong></p>
 <pre class="highlight"><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>&#123; </span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">double</span> PI = <span class="number">3.14159265</span>; </span><br><span class="line">	<span class="keyword">int</span> radius; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassVariableTester</span> </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123; </span><br><span class="line">        Circle x = <span class="keyword">new</span> Circle(); </span><br><span class="line">        System.out.println(x.PI); </span><br><span class="line">        System.out.println(Circle.PI); </span><br><span class="line">        Circle.PI = <span class="number">3.14</span>; </span><br><span class="line">        System.out.println(x.PI); </span><br><span class="line">        System.out.println(Circle.PI); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre>
 
-<p>当我们生成Circle类的实例时，在每一个实例中并 没有存储PI的值，PI的值存储在类中<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518141531575.png" alt="image-20210518141531575" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518141531575.png" class="lozad post-image"></p>
+<p>当我们生成Circle类的实例时，在每一个实例中并 没有存储PI的值，PI的值存储在类中</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201741823.png" alt="image-20210817201741823" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201741823.png" class="lozad post-image"></p>
 <h4 id="final修饰符"><a href="#final修饰符" class="headerlink" title="final修饰符"></a>final修饰符</h4><p>实例变量和类变量都可以被声明为final</p>
 <p>final实例变量必须在每个构造方法结束之前赋初值，以保证使用之前会被初始化</p>
 <p>final类变量必须在声明的同时初始化</p>
@@ -579,13 +575,12 @@
 <p>如果当前位置不在上述编译程序的目录下，可以 利用classpath指定JVM搜索类文件的路径。比如:  <code>java -classpath cn.edu.nwpu.person.Student</code></p>
 <h3 id="6-访问控制"><a href="#6-访问控制" class="headerlink" title="6.访问控制"></a>6.访问控制</h3><h4 id="类的访问控制"><a href="#类的访问控制" class="headerlink" title="类的访问控制"></a>类的访问控制</h4><p>体现封装和细节隐藏的程度</p>
 <p>类的访问控制只有public及无修饰符（缺省类）两种</p>
-<p>访问权限符与访问能力之间的关系如表<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518150716887.png" alt="image-20210518150716887" style="zoom: 67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518150716887.png" class="lozad post-image"></p>
+<p>访问权限符与访问能力之间的关系如表<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201819831.png" alt="image-20210817201819831" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201819831.png" class="lozad post-image"></p>
 <h4 id="类成员的访问控制"><a href="#类成员的访问控制" class="headerlink" title="类成员的访问控制"></a>类成员的访问控制</h4><p>公有（public）可以被其他任何对象访问（前提是对类成员所在类有访问权限）</p>
 <p>保护（protected）可被<strong>同包任何类</strong>，同一类及其子类的实例对象访问</p>
 <p>私有（private）只能被这个类本身访问，在类外不可见</p>
 <p>默认（default）仅允许同一个包内访问：又被称为“包访问权限”</p>
-<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518151511834.png" alt="image-20210518151511834" style="zoom: 67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518151511834.png" class="lozad post-image">
-
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201854023.png" alt="image-20210817201854023" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201854023.png" class="lozad post-image"></p>
 <p><strong>面向对象程序设计为了体现细节隐藏，应该尽可能把数据成员设计为private。</strong></p>
 <p>如果要允许其它类访问radius的值，就需要在Circle类中声明 相应的公有方法。通常有两类典型的方法用于访问属性值， get方法及set方法</p>
 <h4 id="get方法"><a href="#get方法" class="headerlink" title="get方法"></a>get方法</h4><p>功能是取得属性变量的值</p>
@@ -622,10 +617,7 @@
 </li>
 </ul>
 <h4 id="Package补充"><a href="#Package补充" class="headerlink" title="Package补充"></a>Package补充</h4><p>Alpha类的访问控制 为public,则其成员的可见性：</p>
-<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518152909372.png" alt="image-20210518152909372" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518152909372.png" class="lozad post-image">
-
-<img src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518152916986.png" alt="image-20210518152916986" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\hfxue\AppData\Roaming\Typora\typora-user-images\image-20210518152916986.png" class="lozad post-image">
-
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201911757.png" alt="image-20210817201911757" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210817201911757.png" class="lozad post-image"></p>
 <h2 id="三、对象的初始化和回收"><a href="#三、对象的初始化和回收" class="headerlink" title="三、对象的初始化和回收"></a>三、对象的初始化和回收</h2><p>对象的初始化</p>
 <p>系统在生成对象时，会为对象分配内存空间，并自动调用构造方法对实例变量进行初始化</p>
 <p>对象回收</p>
@@ -670,8 +662,7 @@
 <h4 id="this关键字的使用"><a href="#this关键字的使用" class="headerlink" title="this关键字的使用"></a>this关键字的使用</h4><p>可以使用this关键字在一个构造方法中调用另外的构造方法；</p>
 <p>代码更简洁，维护起来更容易；</p>
 <p><strong>通常用参数个数比较少的构造方法调用参数个数最多的构造方法</strong>。</p>
-<img src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518190738715.png" alt="image-20210518190738715" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518190738715.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210518190738715.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210518190738715.png"></p>
 <h3 id="2-内存回收技术"><a href="#2-内存回收技术" class="headerlink" title="2.内存回收技术"></a>2.内存回收技术</h3><h4 id="内存回收技术"><a href="#内存回收技术" class="headerlink" title="内存回收技术"></a><strong>内存回收技术</strong></h4><p>当一个对象在程序中不再被使用时，就成为一个无用对象</p>
 <ul>
 <li><strong>当前的代码段不属于对象的作用域</strong></li>
@@ -708,8 +699,7 @@
 <p>​    变量成员声明及初始化；</p>
 <p>​    方法声明及方法体；</p>
 <p>}</p>
-<img src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518192536824.png" alt="image-20210518192536824" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第二章 类与对象的基本概念.assets\image-20210518192536824.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210518192536824.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210518192536824.png"></p>
 <p>枚举类型特点</p>
 <p>枚举类型是类，而不是简单的整数类型，枚举值是类的对象。</p>
 <p>枚举类型是java.lang.Enum类的子类。</p>
