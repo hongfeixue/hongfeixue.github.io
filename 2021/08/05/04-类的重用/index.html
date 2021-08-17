@@ -45,7 +45,7 @@
         content="2021-08-05">
       <meta 
         property="og:article:modified_time" 
-        content="2021-08-05">
+        content="2021-08-17">
       <meta 
         property="og:article:author" 
         content="xuehongfei">
@@ -294,31 +294,25 @@
 <p>也称子类，继承其他类而得到的类，继承所有祖先的状态和行为，派生类可以增加变量和方法，派生类也可以覆盖继承的方法。</p>
 <p>is_a关系</p>
 <p>子类对象与父类对象存在“IS A”（或“is a kind of”）的关系</p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520145613104.png" alt="image-20210520145613104" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520145613104.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520145613104.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520145613104.png"></p>
 <h4 id="派生类对象"><a href="#派生类对象" class="headerlink" title="派生类对象"></a>派生类对象</h4><p>派生类产生的对象</p>
 <p>从外部来看，它应该包括：与基类相同的接口；可以具有更多的方法和数据成员</p>
 <p>其内包含着一个基类类型的子对象</p>
 <h3 id="2-继承的语法"><a href="#2-继承的语法" class="headerlink" title="2.继承的语法"></a>2.继承的语法</h3><p>继承的语法</p>
 <p><code>class childClass extends parentClass&#123;//类体&#125;</code></p>
 <p>子类不能直接访问从父类中继承的<strong>私有属性及方法</strong>，但可使用<strong>公有（及保护）方法</strong>进行访问。</p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520150411174.png" alt="image-20210520150411174" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520150411174.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520150411174.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520150411174.png"></p>
 <h3 id="3-隐藏和覆盖"><a href="#3-隐藏和覆盖" class="headerlink" title="3.隐藏和覆盖"></a>3.隐藏和覆盖</h3><p>子类对从父类继承来的属性变量及方法可以<strong>重新定义</strong></p>
-<h4 id="属性的隐藏"><a href="#属性的隐藏" class="headerlink" title="属性的隐藏"></a>属性的隐藏</h4><img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520150518517.png" alt="image-20210520150518517" style="zoom:80%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520150518517.png" class="lozad post-image">
-
+<h4 id="属性的隐藏"><a href="#属性的隐藏" class="headerlink" title="属性的隐藏"></a>属性的隐藏</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520150518517.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520150518517.png"></p>
 <p>子类中声明了与父类中相同的成员变量名，则从父类继承的变量将被隐藏。</p>
 <p>子类拥有了两个相同名字的变量，一个继承自父类，另一个继承由自己声明</p>
 <p>当子类执行继承自<strong>父类的操作时</strong>，处理的是继承自<strong>父类的变量</strong>，而当子类执行它<strong>自己声明</strong>的方法时，所操作的就是它<strong>自己声明</strong>的变量。</p>
 <h4 id="访问被隐藏的父类属性"><a href="#访问被隐藏的父类属性" class="headerlink" title="访问被隐藏的父类属性"></a>访问被隐藏的父类属性</h4><p>如何访问被隐藏的父类属性</p>
 <p>调用从父类继承的方法，则操作的是从父类继承的属性；</p>
 <p><strong>使用super.属性</strong></p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520151505445.png" alt="image-20210520151505445" style="zoom: 67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520151505445.png" class="lozad post-image">
-
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520151543932.png" alt="image-20210520151543932" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520151543932.png" class="lozad post-image">
-
-<h4 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h4><img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520151725899.png" alt="image-20210520151725899" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520151725899.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520151505445.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520151505445.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520151543932.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520151543932.png"></p>
+<h4 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h4><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520151725899.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520151725899.png"></p>
 <h4 id="方法覆盖"><a href="#方法覆盖" class="headerlink" title="方法覆盖"></a>方法覆盖</h4><p>方法覆盖</p>
 <ul>
 <li>如果子类不需使用从父类继承来的方法的功能，则可以声明自己的同名方法，称为方法覆盖</li>
@@ -336,8 +330,7 @@
 <ul>
 <li>运行时多态是通过<strong>动态联编</strong>实现的。就是在运行时根据对象的实体类型确定对象的动作。</li>
 </ul>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520152358377.png" alt="image-20210520152358377" style="zoom: 50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520152358377.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520152358377.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520152358377.png"></p>
 <h3 id="4-有继承时的构造方法"><a href="#4-有继承时的构造方法" class="headerlink" title="4.有继承时的构造方法"></a>4.有继承时的构造方法</h3><p>有继承时的构造方法遵循以下的原则</p>
 <ul>
 <li>子类不能从父类继承构造方法</li>
@@ -366,11 +359,10 @@
 <ul>
 <li>要判断两个对象各个属性域的值是否相同，则不能使用从Object类继承来的equals方法，而需要在类声明中对equals方法进行重写</li>
 <li>String类中已经重写了Object类的equals方法，可以判别两个字符串是否内容相同</li>
-<li><img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520170535530.png" alt="image-20210520170535530" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520170535530.png" class="lozad post-image"></li>
+<li><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520170535530.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520170535530.png"></li>
 </ul>
 <h3 id="String-pool"><a href="#String-pool" class="headerlink" title="String pool"></a>String pool</h3><p>双引号中的字符串，作为特殊的对象保存在字符串池中。而且重复的字符串只会保存一份。</p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520171643665.png" alt="image-20210520171643665" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520171643665.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520171643665.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520171643665.png"></p>
 <h3 id="clone方法"><a href="#clone方法" class="headerlink" title="clone方法"></a>clone方法</h3><p>根据已存在的对象构造一个新的对象</p>
 <p>在跟类Object中被定义为protected，所以需要覆盖为public</p>
 <p>实现Cloneable接口，赋予一个对象被克隆的能力</p>
@@ -499,8 +491,7 @@
 <p><strong>Java类中可以有其他类的对象作为成员</strong>，这便是组合</p>
 <h3 id="1-组合的语法"><a href="#1-组合的语法" class="headerlink" title="1.组合的语法"></a>1.组合的语法</h3><p>组合的语法很简单，只要把已存在类的对象放到新类中即可</p>
 <p>可以使用”has a”语句来描述这种关系</p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520200422852.png" alt="image-20210520200422852" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520200422852.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520200422852.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520200422852.png"></p>
 <h3 id="2-组合与继承的比较"><a href="#2-组合与继承的比较" class="headerlink" title="2.组合与继承的比较"></a>2.组合与继承的比较</h3><p>“包含”关系用组合来表达</p>
 <ul>
 <li>如果想利用新类内部一个现有类的特性，而不想使用它的接口， 通常应选择组合，我们需在新类里嵌入现有类的<strong>private对象</strong></li>
@@ -537,8 +528,7 @@
 </ul>
 <h4 id="数据类型包裹类"><a href="#数据类型包裹类" class="headerlink" title="数据类型包裹类"></a>数据类型包裹类</h4><p>对应Java的每一个基本数据类型都有一个数据包裹类</p>
 <p>每个包裹类都只有一个类型为对应的基本数据类型的属性域</p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520202433579.png" alt="image-20210520202433579" style="zoom:80%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520202433579.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520202433579.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520202433579.png"></p>
 <p><strong>生成数据类型包裹类对象的方法</strong></p>
 <ul>
 <li>从基本数据类型的变量或常量生成包裹类对象<ul>
@@ -586,11 +576,9 @@
 </li>
 </ul>
 <p>String类的常用方法1</p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520203601464.png" alt="image-20210520203601464" style="zoom:80%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520203601464.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520203601464.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520203601464.png"></p>
 <p>String类的常用方法2</p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520203704649.png" alt="image-20210520203704649" style="zoom:80%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520203704649.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520203704649.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520203704649.png"></p>
 <h4 id="变量字符串类StringBuffer"><a href="#变量字符串类StringBuffer" class="headerlink" title="变量字符串类StringBuffer"></a>变量字符串类StringBuffer</h4><p>其对象是可以修改的字符串</p>
 <ul>
 <li>字符的个数称为对象的<strong>长度</strong></li>
@@ -605,11 +593,9 @@
 <li><code>new StringBuffer(String aString)</code>    生成aString的一个备份，容量为其长度+16</li>
 </ul>
 <p>StringBuffer类的常用方法1</p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520204303630.png" alt="image-20210520204303630" style="zoom:80%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520204303630.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520204303630.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520204303630.png"></p>
 <p>StringBuffer类的常用方法2</p>
-<img src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520204347416.png" alt="image-20210520204347416" style="zoom:80%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\Java课件\第四章 类的重用.assets\image-20210520204347416.png" class="lozad post-image">
-
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520204347416.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210520204347416.png"></p>
 <p><strong>StringBuilder不是线程安全的，比StringBuffer效率高，应该 尽可能使用。</strong> </p>
 <p> 如果是需要大量的动态的操作字符串，应该选用StringBuffer 或者StringBuilder; 否则应该选用String</p>
 <h4 id="数学类（Math）"><a href="#数学类（Math）" class="headerlink" title="数学类（Math）"></a>数学类（Math）</h4><p>提供一组常量和数学函数，例如</p>
