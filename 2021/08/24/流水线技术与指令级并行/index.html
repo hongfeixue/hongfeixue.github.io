@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="Hexo">
+  <link 
+    rel="icon" 
+    href="/img/catton.jpg">
+  <title>流水线技术与指令级并行</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="流水线技术与指令级并行">
+    
+    
+      <meta 
+        property="og:url" 
+        content="http://example.com/2021/08/24/%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/index.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="img/catton.jpg">
+    
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2021-08-24">
+      <meta 
+        property="og:article:modified_time" 
+        content="2021-08-25">
+      <meta 
+        property="og:article:author" 
+        content="xuehongfei">
+      
+        
+          <meta 
+            property="og:article:tag" 
+            content="计算机组成与系统结构">
+        
+      
+    
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+        <img 
+          class="navbar-logo-img"
+          width="32"
+          height="32"
+          src="/img/catton.jpg" 
+          alt="blog logo">
+      
+      <span class="navbar-logo-dsc">Mr.Xue's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          Home
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          Archive
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          Tags
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          Categories
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          About
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          Friends
+        
+      </a>
+    
+    <a 
+      class="navbar-menu-item darknavbar" 
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </a>
+    <a 
+      class="navbar-menu-item searchnavbar" 
+      id="search">
+      <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i>
+    </a>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      流水线技术与指令级并行
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-08-24T07:13:44.000Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2021-08-24</span>
+    </time>
+    
+      <span class="dot"></span>
+      
+        <a 
+          href="/categories/programming/" 
+          class="post-meta-link">
+          编程
+        </a>
+      
+    
+    
+      <span class="dot"></span>
+      <span>1.9k words</span>
+    
+  </div>
+  
+    <div 
+      class="post-meta post-show-meta" 
+      style="margin-top: -10px;">
+      <div style="display: flex; align-items: center;">
+        <i 
+          class="iconfont icon-biaoqian" 
+          style="margin-right: 2px; font-size: 1.15rem;">
+        </i>
+        
+          
+          <a 
+            href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" 
+            class="post-meta-link">
+            计算机组成与系统结构
+          </a>
+        
+      </div>
+    </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <h1 id="流水线技术与指令级并行"><a href="#流水线技术与指令级并行" class="headerlink" title="流水线技术与指令级并行"></a>流水线技术与指令级并行</h1><p><strong>流水线举例</strong></p>
+<p>洗衣店</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824151938320.png" alt="image-20210824151938320" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824151938320.png" class="lozad post-image"></p>
+<p><strong>并行处理技术</strong></p>
+<p>并行性的两种含义：</p>
+<ul>
+<li>同时性：同一时刻</li>
+<li>并发性：同一时间间隔</li>
+</ul>
+<p>并行处理技术的三种形式：</p>
+<ul>
+<li>时间并行：时间重叠，流水</li>
+<li>空间并行：资源重复</li>
+<li>时间并行+空间并行：超标量流水</li>
+</ul>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824154148442.png" alt="image-20210824154148442" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824154148442.png" class="lozad post-image"></p>
+<p>将一<strong>重复</strong>的处理过程分解为若干<strong>子过程</strong>，每个子过程都可在专用设备构成的<strong>流水线功能段</strong>上实现，并可与其他子过程<strong>同时执行</strong>，这种技术成为<strong>流水技术。</strong></p>
+<p><strong>流水线的一般结构</strong></p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824155239219.png" alt="image-20210824155239219" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824155239219.png" class="lozad post-image"></p>
+<p>结论：</p>
+<ul>
+<li>流水过程中由多个相联系的子过程组成，每个子过程由专用的功能设备实现，每个子过程成为流水线的“级”或“段”。“级”数成为流水线的<strong>“深度”</strong>；</li>
+<li>流水线需要有<strong>“通过时间”</strong>，在此之后的流水过程才进入稳定工作状态，每一个时钟周期流出一个结果；</li>
+<li>流水线不能缩短单个任务的响应时间，但可以提高<strong>吞吐率</strong>；</li>
+<li>流水线速度受限于<strong>最慢</strong>流水线段的运行速度，所以，各个功能段所需要时间应尽量相等；</li>
+<li>流水技术适合于大量<strong>重复</strong>的处理过程，只有流水线的输入能<strong>连续</strong>地提供任务，流水线的效率才能充分发挥；</li>
+<li>流水线中多个任务是<strong>并行</strong>处理的。</li>
+</ul>
+<p><strong>流水线的分类</strong></p>
+<p>按流水线位于<strong>计算机系统的层级</strong>划分：</p>
+<ul>
+<li>系统及流水线/宏流水线：在多计算机系统中由多个处理机串行构成的流水线。</li>
+</ul>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824160012594.png" alt="image-20210824160012594" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824160012594.png" class="lozad post-image"></p>
+<ul>
+<li>处理器级流水线</li>
+</ul>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824160046158.png" alt="image-20210824160046158" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824160046158.png" class="lozad post-image"></p>
+<ul>
+<li>部件级流水线<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824160139771.png" alt="image-20210824160139771" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210824160139771.png" class="lozad post-image"></li>
+</ul>
+<p>按流水线<strong>功能的强弱</strong>划分：</p>
+<ul>
+<li>单功能流水线</li>
+<li>多功能流水线</li>
+</ul>
+<p>按流水线<strong>是否有反馈回路</strong>划分：</p>
+<ul>
+<li>线性流水线</li>
+<li>非线性流水线——流水线调度</li>
+</ul>
+<p>按流水线<strong>流出顺序与输入端任务流入顺序是否相同</strong>划分：</p>
+<ul>
+<li>顺序流动流水线</li>
+<li>异步流动流水线</li>
+</ul>
+<h2 id="指令流水线"><a href="#指令流水线" class="headerlink" title="指令流水线"></a>指令流水线</h2><h3 id="基本的指令流水线"><a href="#基本的指令流水线" class="headerlink" title="基本的指令流水线"></a>基本的指令流水线</h3><p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825102020778.png" alt="image-20210825102020778" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825102020778.png" class="lozad post-image"></p>
+<h3 id="指令流水线策略"><a href="#指令流水线策略" class="headerlink" title="指令流水线策略"></a>指令流水线策略</h3><p>1.增加指令流水线的<strong>深度</strong></p>
+<p>2.增加指令流水线的<strong>条数</strong></p>
+<h2 id="7-4流水线的性能度量"><a href="#7-4流水线的性能度量" class="headerlink" title="7.4流水线的性能度量"></a>7.4流水线的性能度量</h2><h3 id="7-4-1时-空图"><a href="#7-4-1时-空图" class="headerlink" title="7.4.1时-空图"></a>7.4.1时-空图</h3><p>通过时间 = （流水线级数 - 1）* 时钟周期</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825104441271.png" alt="image-20210825104441271" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825104441271.png" class="lozad post-image"></p>
+<h3 id="7-4-2吞吐率"><a href="#7-4-2吞吐率" class="headerlink" title="7.4.2吞吐率"></a>7.4.2吞吐率</h3><p>吞吐率：单位时间内流水线所完成的任务数或输出结果的数量。</p>
+<p><strong>最大吞吐率</strong>TP<sub>max</sub>：流水线在达到稳定状态后所得到的吞吐率。（流水线时钟周期的倒数）</p>
+<p>提高方法：细分、重复设置</p>
+<p><strong>实际吞吐率</strong>：若流水线由m段组成，完成n个任务的吞吐率成为实际吞吐率，记作TP。</p>
+<p>假设流水线各段运行时间相等，为一个时钟周期T<sub>CLK</sub>，在不出现流水线断流的情况下</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825110038701.png" alt="image-20210825110038701" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825110038701.png" class="lozad post-image"></p>
+<h3 id="7-4-3加速比"><a href="#7-4-3加速比" class="headerlink" title="7.4.3加速比"></a>7.4.3加速比</h3><p>若流水线为m段，加速比S定义为等功能的<strong>非流水线</strong>执行时间T(l)与<strong>流水线</strong>执行时间T(m)之比。</p>
+<p>增大指令流水线的级数和送入流水线的指令数均可以加速流水线的运行速度。</p>
+<h3 id="7-4-4效率"><a href="#7-4-4效率" class="headerlink" title="7.4.4效率"></a>7.4.4效率</h3><p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825112036922.png" alt="image-20210825112036922" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825112036922.png" class="lozad post-image"></p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825112230110.png" alt="image-20210825112230110" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825112230110.png" class="lozad post-image"></p>
+<h2 id="7-5指令流水线的性能提高"><a href="#7-5指令流水线的性能提高" class="headerlink" title="7.5指令流水线的性能提高"></a>7.5指令流水线的性能提高</h2><h3 id="7-5-1流水线的基本性能问题"><a href="#7-5-1流水线的基本性能问题" class="headerlink" title="7.5.1流水线的基本性能问题"></a>7.5.1流水线的基本性能问题</h3><p>限制指令流水线性能提高的因素：</p>
+<ul>
+<li>流水线的深度受限于流水线的延迟、流水线段的时间不均衡和流水线的额外开销。</li>
+<li>指令执行时可能存在的相关或“冒险”问题。</li>
+</ul>
+<p><strong>相关</strong>：相邻或相近的两条指令因存在<strong>某种关联</strong>，后一条指令不能在原指令的时钟周期开始执行。</p>
+<p>相关或冒险有三类：</p>
+<ul>
+<li><strong>结构</strong>冒险：资源冲突（局部性相关）</li>
+<li><strong>数据</strong>冒险：一条指令需要用到前面某条指令的结果（局部性相关）</li>
+<li><strong>控制</strong>冒险：分支等转移类指令/其他能够改变PC值的指令（全局性相关）</li>
+</ul>
+<h3 id="7-5-2结构冒险"><a href="#7-5-2结构冒险" class="headerlink" title="7.5.2结构冒险"></a>7.5.2结构冒险</h3><p>有两种情形会导致结构冒险：</p>
+<ul>
+<li>部分功能单元没有充分流水。</li>
+</ul>
+<p>解决方法：将流水线设计的更合理。</p>
+<ul>
+<li>资源冲突：当两个以上流水线段需要同时使用同一个硬件资源时，会发生冲突。</li>
+</ul>
+<p>解决方法：</p>
+<ul>
+<li>增加资源副本：<ul>
+<li>存储器冲突：哈佛结构</li>
+<li>两个ALU：取指令—地址加法器</li>
+</ul>
+</li>
+<li>改变资源以便它们能并发的使用<ul>
+<li>不相关的数据尽量使用不同的寄存器</li>
+<li>寄存器重命名</li>
+</ul>
+</li>
+<li>通过延迟（或暂停）流水线的冲突段或在冲突段插入流水线气泡（气泡在流水线中只占资源不做实际操作），使各段“轮流”使用资源。</li>
+</ul>
+<h3 id="7-5-2数据冒险"><a href="#7-5-2数据冒险" class="headerlink" title="7.5.2数据冒险"></a>7.5.2数据冒险</h3><p>相关类型：</p>
+<ul>
+<li>先写后读</li>
+<li>先读后写</li>
+<li>写一写</li>
+</ul>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825113844800.png" alt="image-20210825113844800" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825113844800.png" class="lozad post-image"></p>
+<p>解决方法：</p>
+<ul>
+<li>采用<strong>直通技术</strong>（相关直接通路），将运算结果经<strong>相关直接通路</strong>直接送入所需部件。</li>
+<li>增加<strong>专用硬件</strong>（推后法），增加<strong>流水线互锁</strong>硬件。互锁硬件先要检测流水线中指令的数据相关性，当互锁硬件发现数据相关时，使流水线工作停顿下来，直到相关消失为止。</li>
+<li>采用<strong>编译器</strong>  流水线调度/指令调度：编译器可以对指令重新排序或插入空操作指令，使得加载任何冲突数据的操作被延迟，但对程序逻辑或输出不受影响。</li>
+</ul>
+<h3 id="7-5-4控制相关"><a href="#7-5-4控制相关" class="headerlink" title="7.5.4控制相关"></a>7.5.4控制相关</h3><p>对条件分支指令的处理方法</p>
+<p>方法1：冻结流水线</p>
+<ul>
+<li>一旦在指令译码段检测到分支指令，就在转移目标地址确定之前保存或删除所有紧随分支指令之后的指令，当分支指令从执行段流出、确定出新的PC值时，流水线才继续依据新PC值填充流水线。</li>
+<li>会严重地影响流水线的性能。</li>
+<li>早期的CPU。</li>
+</ul>
+<p>方法2：预取分支目标</p>
+<ul>
+<li>当条件分支指令被识别时，除了紧随其后的指令外，分支目标也被预取，并保存到分支指令被执行。</li>
+<li>如果分支跳转发生，已预取到的目标指令可立刻执行。</li>
+</ul>
+<p>方法3：多流</p>
+<p>方法4：循环缓冲器</p>
+<p><strong>方法5：分支预测</strong></p>
+<p>1.静态分支预测</p>
+<p>可以采用的预测方法：</p>
+<ul>
+<li>预测分支不会发生 “出错检测处理”</li>
+<li>预测分支总是发生 “循环”</li>
+<li>由编译器预测</li>
+<li>测试法 实际运行该程序（一般是在模拟器上），然后将有关信息送给编译器</li>
+</ul>
+<p>2.动态分支预测</p>
+<ul>
+<li>通过记录分支指令的近期运行历史，并以此作为预测的依据，来提高分支预测的准确度。</li>
+<li><strong>分支历史表</strong>，也称分支预测缓存。</li>
+</ul>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825162154125.png" alt="image-20210825162154125" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825162154125.png" class="lozad post-image"></p>
+<p><strong>方法6：延迟分支</strong></p>
+<p>延迟转移技术 无条件转移指令的延迟执行：</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825163309286.png" alt="image-20210825163309286" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825163309286.png" class="lozad post-image"></p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825163410718.png" alt="image-20210825163410718" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825163410718.png" class="lozad post-image"></p>
+<p>采用延迟转移技术的两个限制条件：</p>
+<ul>
+<li>被移动指令在移动过程中与所经过的指令之间<strong>没有数据相关</strong>。</li>
+<li>被移动指令<strong>不破坏条件码</strong>，至少不影响后面的指令使用条件码。</li>
+</ul>
+<p>如果找不到符合上述条件的指令，必须在条件转移指令后面插入空操作。</p>
+<p>如果指令的执行过程分为多个流水段，则要插入多条指令。</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825164015096.png" alt="image-20210825164015096" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210825164015096.png" class="lozad post-image"></p>
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            xuehongfei
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="http://example.com/2021/08/24/%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/">
+            http://example.com/2021/08/24/%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/2021/08/23/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">Next</div>
+          
+            <div class="nav-title">指令系统 </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C"><span class="toc-text">流水线技术与指令级并行</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-text">指令流水线</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-text">基本的指令流水线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%AD%96%E7%95%A5"><span class="toc-text">指令流水线策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-4%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F"><span class="toc-text">7.4流水线的性能度量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-1%E6%97%B6-%E7%A9%BA%E5%9B%BE"><span class="toc-text">7.4.1时-空图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-2%E5%90%9E%E5%90%90%E7%8E%87"><span class="toc-text">7.4.2吞吐率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-3%E5%8A%A0%E9%80%9F%E6%AF%94"><span class="toc-text">7.4.3加速比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-4%E6%95%88%E7%8E%87"><span class="toc-text">7.4.4效率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-5%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E6%80%A7%E8%83%BD%E6%8F%90%E9%AB%98"><span class="toc-text">7.5指令流水线的性能提高</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-1%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">7.5.1流水线的基本性能问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-2%E7%BB%93%E6%9E%84%E5%86%92%E9%99%A9"><span class="toc-text">7.5.2结构冒险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-2%E6%95%B0%E6%8D%AE%E5%86%92%E9%99%A9"><span class="toc-text">7.5.2数据冒险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-4%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3"><span class="toc-text">7.5.4控制相关</span></a></li></ol></li></ol></li></ol>
+</div></main>
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="img/catton.jpg" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">xuehongfei</p>
+<p class="author-description">designed by Mr.Xue</p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>13</span>
+    <span>Posts</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>1</span>
+    <span>Categories</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>2</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C"><span class="toc-text">流水线技术与指令级并行</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-text">指令流水线</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-text">基本的指令流水线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%AD%96%E7%95%A5"><span class="toc-text">指令流水线策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-4%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F"><span class="toc-text">7.4流水线的性能度量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-1%E6%97%B6-%E7%A9%BA%E5%9B%BE"><span class="toc-text">7.4.1时-空图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-2%E5%90%9E%E5%90%90%E7%8E%87"><span class="toc-text">7.4.2吞吐率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-3%E5%8A%A0%E9%80%9F%E6%AF%94"><span class="toc-text">7.4.3加速比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-4%E6%95%88%E7%8E%87"><span class="toc-text">7.4.4效率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-5%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E6%80%A7%E8%83%BD%E6%8F%90%E9%AB%98"><span class="toc-text">7.5指令流水线的性能提高</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-1%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">7.5.1流水线的基本性能问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-2%E7%BB%93%E6%9E%84%E5%86%92%E9%99%A9"><span class="toc-text">7.5.2结构冒险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-2%E6%95%B0%E6%8D%AE%E5%86%92%E9%99%A9"><span class="toc-text">7.5.2数据冒险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-4%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3"><span class="toc-text">7.5.4控制相关</span></a></li></ol></li></ol></li></ol>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>Categories
+  </div>
+  <div class="categories-list">
+    
+      <a href="/categories/programming/">
+        <div class="categories-list-item">
+          programming
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>hot tags
+  </div>
+  <div class="tags-list">
+    
+      <a 
+        href="/tags/Java%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" 
+        title="Java程序设计">
+        <div class="tags-list-item">Java程序设计</div>
+      </a>
+    
+      <a 
+        href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" 
+        title="计算机组成与系统结构">
+        <div class="tags-list-item">计算机组成与系统结构</div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C"><span class="toc-text">流水线技术与指令级并行</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-text">指令流水线</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-text">基本的指令流水线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%AD%96%E7%95%A5"><span class="toc-text">指令流水线策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-4%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F"><span class="toc-text">7.4流水线的性能度量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-1%E6%97%B6-%E7%A9%BA%E5%9B%BE"><span class="toc-text">7.4.1时-空图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-2%E5%90%9E%E5%90%90%E7%8E%87"><span class="toc-text">7.4.2吞吐率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-3%E5%8A%A0%E9%80%9F%E6%AF%94"><span class="toc-text">7.4.3加速比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-4%E6%95%88%E7%8E%87"><span class="toc-text">7.4.4效率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-5%E6%8C%87%E4%BB%A4%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E6%80%A7%E8%83%BD%E6%8F%90%E9%AB%98"><span class="toc-text">7.5指令流水线的性能提高</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-1%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">7.5.1流水线的基本性能问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-2%E7%BB%93%E6%9E%84%E5%86%92%E9%99%A9"><span class="toc-text">7.5.2结构冒险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-2%E6%95%B0%E6%8D%AE%E5%86%92%E9%99%A9"><span class="toc-text">7.5.2数据冒险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-4%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3"><span class="toc-text">7.5.4控制相关</span></a></li></ol></li></ol></li></ol>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>Recent Posts
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-24</div>
+        <a href="/2021/08/24/%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF%E4%B8%8E%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/"><div class="recent-posts-item-content">流水线技术与指令级并行</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-23</div>
+        <a href="/2021/08/23/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/"><div class="recent-posts-item-content">指令系统</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-20</div>
+        <a href="/2021/08/20/%E5%8D%8E%E4%B8%BA%E5%AE%9E%E4%B9%A0%E8%AE%B0%E5%BD%95/"><div class="recent-posts-item-content">华为实习记录</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-08-18</div>
+        <a href="/2021/08/18/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/"><div class="recent-posts-item-content">存储系统</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2020 -
+          
+          2021
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          Mr.Xue's Blog
+        </a>
+      </div>
+    </div>
+
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://hexo.io/" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;Hexo
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Theme -
+          <a 
+            href="https://github.com/theme-kaze" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;Kaze
+          </a>
+        
+      </div>
+    
+    
+    
+    
+</footer> 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+     
+    
+    
+  </body>
+</html>
