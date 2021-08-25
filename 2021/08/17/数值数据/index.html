@@ -45,11 +45,15 @@
         content="2021-08-17">
       <meta 
         property="og:article:modified_time" 
-        content="2021-08-17">
+        content="2021-08-25">
       <meta 
         property="og:article:author" 
         content="xuehongfei">
       
+        
+          <meta 
+            property="og:article:tag" 
+            content="计算机组成与系统结构">
         
       
     
@@ -272,17 +276,142 @@
       <span>2021-08-17</span>
     </time>
     
+      <span class="dot"></span>
+      
+        <a 
+          href="/categories/programming/" 
+          class="post-meta-link">
+          编程
+        </a>
+      
+    
     
       <span class="dot"></span>
-      <span>0 words</span>
+      <span>641 words</span>
     
   </div>
+  
+    <div 
+      class="post-meta post-show-meta" 
+      style="margin-top: -10px;">
+      <div style="display: flex; align-items: center;">
+        <i 
+          class="iconfont icon-biaoqian" 
+          style="margin-right: 2px; font-size: 1.15rem;">
+        </i>
+        
+          
+          <a 
+            href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" 
+            class="post-meta-link">
+            计算机组成与系统结构
+          </a>
+        
+      </div>
+    </div>
   
   </header>
   <div 
     id="section" 
     class="post-content">
-    
+    <h2 id="一、数值数据的编码"><a href="#一、数值数据的编码" class="headerlink" title="一、数值数据的编码"></a>一、数值数据的编码</h2><p>（1）补码概念的引入</p>
+<ul>
+<li>无模运算</li>
+<li>有模运算<ul>
+<li>假定M为模，若数a,b满足a+b=M,则称a，b互为补数。</li>
+<li>在有模运算中，减一个数等于加上这个数对模的补数。</li>
+</ul>
+</li>
+</ul>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802223300585.png" alt="image-20210802223300585" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802223300585.png" class="lozad post-image">
+
+<p>（2）补码的定义</p>
+<p>设模为M，一个数X补码的一般定义为：[X]补 = M + X</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802224259793.png" alt="image-20210802224259793" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802224259793.png" class="lozad post-image">
+
+<p>纯小数模为2：</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802225956834.png" alt="image-20210802225956834" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802225956834.png" class="lozad post-image">
+
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802224555498.png" alt="image-20210802224555498" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802224555498.png" class="lozad post-image">
+
+<p>纯整数模为2^n：</p>
+ <img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802225501053.png" alt="image-20210802225501053" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802225501053.png" class="lozad post-image">
+
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802225542535.png" alt="image-20210802225542535" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802225542535.png" class="lozad post-image">
+
+<p>（3）补码的性质</p>
+<ul>
+<li>补码的符号位：最高位为“0”，此数为正；最高位为“1”，此数为负。</li>
+<li>补码中0的表示唯一。</li>
+<li>补码的表示范围：<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802230618396.png" alt="image-20210802230618396" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802230618396.png" class="lozad post-image"></li>
+<li>负数的补码值大于正数的补码值。</li>
+<li>相互转换：当X&gt;=0时，不变；当X&lt;0时，求补码为|X|的补码按位取反并末位加一；求真值时，把该负数的补码按位取反末位加一，求原码把 最后结果取相反数。 <img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802231700477.png" alt="image-20210802231700477" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802231700477.png" class="lozad post-image"></li>
+</ul>
+ <img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802232142870.png" alt="image-20210802232142870" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210802232142870.png" class="lozad post-image">
+
+<ul>
+<li>符号扩展位</li>
+</ul>
+<h2 id="二、数据的定点与浮点表示"><a href="#二、数据的定点与浮点表示" class="headerlink" title="二、数据的定点与浮点表示"></a>二、数据的定点与浮点表示</h2><h3 id="2-浮点数表示"><a href="#2-浮点数表示" class="headerlink" title="2.浮点数表示"></a>2.浮点数表示</h3><p>1）浮点数的表示方法<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804224641872.png" alt="image-20210804224641872" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804224641872.png" class="lozad post-image"></p>
+<p>浮点数表示的数值为：<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804224749643.png" alt="image-20210804224749643" style="zoom:25%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804224749643.png" class="lozad post-image"></p>
+<p>B：阶码的底，一般为2、4、8或16；</p>
+<p>规格化的浮点数：若用补码表示尾数，如果阶码的底为2，则尾数应满足 1/2 &lt;= M &lt; 1 或 1 &lt;= M &lt; -1/2，0.1xx…x；如果符号位和最高数值位不同则为规则化尾数，相同则不是。</p>
+<p>2）规格化的浮点数</p>
+<p>左规：<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804230310461.png" alt="image-20210804230310461" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804230310461.png" class="lozad post-image"></p>
+<p>右规：<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804230330523.png" alt="image-20210804230330523" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804230330523.png" class="lozad post-image"></p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804231123083.png" alt="image-20210804231123083" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804231123083.png" class="lozad post-image">
+
+<p>浮点数在数轴上的分布：</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804231339079.png" alt="image-20210804231339079" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804231339079.png" class="lozad post-image">
+
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804231455018.png" alt="image-20210804231455018" style="zoom: 50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210804231455018.png" class="lozad post-image">
+
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210805232401740.png" alt="image-20210805232401740" style="zoom:80%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210805232401740.png" class="lozad post-image">
+
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807213416033.png" alt="image-20210807213416033" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807213416033.png" class="lozad post-image"></p>
+<h3 id="3-IEEE-754标准"><a href="#3-IEEE-754标准" class="headerlink" title="3.IEEE 754标准"></a>3.IEEE 754标准</h3><p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807214848789.png" alt="image-20210807214848789" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807214848789.png" class="lozad post-image"></p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807220020208.png" alt="image-20210807220020208" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807220020208.png" class="lozad post-image"></p>
+<p>IEEE 754单精度格式二进制位与其对应的浮点数真值举例：</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807220554036.png" alt="image-20210807220554036" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807220554036.png" class="lozad post-image"></p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807220650621.png" alt="image-20210807220650621" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807220650621.png" class="lozad post-image"></p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807221011255.png" alt="image-20210807221011255" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807221011255.png" class="lozad post-image"></p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807220725865.png" alt="image-20210807220725865" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807220725865.png" class="lozad post-image"></p>
+<p>正无穷+负无穷返回一个非数</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807221454503.png" alt="image-20210807221454503" style="zoom:80%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807221454503.png" class="lozad post-image">
+
+<p>下溢的处理：渐进下溢</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807222500440.png" alt="image-20210807222500440" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807222500440.png" class="lozad post-image"></p>
+<p>舍入模式：</p>
+<ul>
+<li>就近舍入——舍入到最接近的可表示值；当有两个最接近的可表示值时，首先“偶数”值。<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807222633099.png" alt="image-20210807222633099" style="zoom:67%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807222633099.png" class="lozad post-image"></li>
+</ul>
+<ul>
+<li>朝0舍入</li>
+<li>朝正/负无穷大舍入</li>
+</ul>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807223551669.png" alt="image-20210807223551669" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807223551669.png" class="lozad post-image"></p>
+<h2 id="三、二进制编码的十进制数：BCD码"><a href="#三、二进制编码的十进制数：BCD码" class="headerlink" title="三、二进制编码的十进制数：BCD码"></a>三、二进制编码的十进制数：BCD码</h2><p>Binary-Coded Decimal， BCD</p>
+<p>（1）十进制有权码：4位有权BCD码</p>
+<p>逢九互补，逢十进一</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807225232969.png" alt="image-20210807225232969" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807225232969.png" class="lozad post-image"></p>
+<p>（2）十进制无权码：4位无权BCD码</p>
+<p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807225412915.png" alt="image-20210807225412915" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807225412915.png" class="lozad post-image"></p>
+<h1 id="非数值数据的编码"><a href="#非数值数据的编码" class="headerlink" title="非数值数据的编码"></a>非数值数据的编码</h1><h2 id="1-ASCII字符编码"><a href="#1-ASCII字符编码" class="headerlink" title="1.ASCII字符编码"></a>1.ASCII字符编码</h2><ul>
+<li>33个控制字符</li>
+<li>0~9：30H加上数字值</li>
+<li>52个英文字母（大写字母：40H加上字母顺序；小写字母：60H加上字母顺序）</li>
+<li>32个特殊字符（例如# @）</li>
+<li>空格符号：20H</li>
+</ul>
+<h2 id="2-汉字编码"><a href="#2-汉字编码" class="headerlink" title="2.汉字编码"></a>2.汉字编码</h2><p>汉字的输入编码：拼音，字形</p>
+<p>GBK：</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807231211945.png" alt="image-20210807231211945" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807231211945.png" class="lozad post-image">
+
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807231547567.png" alt="image-20210807231547567" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807231547567.png" class="lozad post-image">
+
+<p>汉字的输出：点阵，矢量，曲线</p>
+<h1 id="检错与纠错码"><a href="#检错与纠错码" class="headerlink" title="检错与纠错码"></a>检错与纠错码</h1><h2 id="一、奇偶校验码"><a href="#一、奇偶校验码" class="headerlink" title="一、奇偶校验码"></a>一、奇偶校验码</h2><p><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807232028413.png" alt="image-20210807232028413" style="zoom: 25%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210807232028413.png" class="lozad post-image"><img src="D:\我的文件\计算机组成与系统结构\数值数据.assets\image-20210807232047934.png" alt="image-20210807232047934" style="zoom: 25%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="D:\我的文件\计算机组成与系统结构\数值数据.assets\image-20210807232047934.png" class="lozad post-image"></p>
+<h2 id="二、循环冗余校验码"><a href="#二、循环冗余校验码" class="headerlink" title="二、循环冗余校验码"></a>二、循环冗余校验码</h2><h2 id="三、海明码"><a href="#三、海明码" class="headerlink" title="三、海明码"></a>三、海明码</h2>
   </div>
   <div>
     
@@ -352,7 +481,7 @@
     style="padding-right: 2px;">
   </i>TOC
 </div>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE%E7%9A%84%E7%BC%96%E7%A0%81"><span class="toc-text">一、数值数据的编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%9A%E7%82%B9%E4%B8%8E%E6%B5%AE%E7%82%B9%E8%A1%A8%E7%A4%BA"><span class="toc-text">二、数据的定点与浮点表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B5%AE%E7%82%B9%E6%95%B0%E8%A1%A8%E7%A4%BA"><span class="toc-text">2.浮点数表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-IEEE-754%E6%A0%87%E5%87%86"><span class="toc-text">3.IEEE 754标准</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E7%9A%84%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%EF%BC%9ABCD%E7%A0%81"><span class="toc-text">三、二进制编码的十进制数：BCD码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE%E7%9A%84%E7%BC%96%E7%A0%81"><span class="toc-text">非数值数据的编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ASCII%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">1.ASCII字符编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%B1%89%E5%AD%97%E7%BC%96%E7%A0%81"><span class="toc-text">2.汉字编码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A3%80%E9%94%99%E4%B8%8E%E7%BA%A0%E9%94%99%E7%A0%81"><span class="toc-text">检错与纠错码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%A5%87%E5%81%B6%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-text">一、奇偶校验码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-text">二、循环冗余校验码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B5%B7%E6%98%8E%E7%A0%81"><span class="toc-text">三、海明码</span></a></li></ol>
 </div></main>
             <aside class="left-column">
               
@@ -400,7 +529,7 @@
     style="padding-right: 2px;">
   </i>TOC
 </div>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE%E7%9A%84%E7%BC%96%E7%A0%81"><span class="toc-text">一、数值数据的编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%9A%E7%82%B9%E4%B8%8E%E6%B5%AE%E7%82%B9%E8%A1%A8%E7%A4%BA"><span class="toc-text">二、数据的定点与浮点表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B5%AE%E7%82%B9%E6%95%B0%E8%A1%A8%E7%A4%BA"><span class="toc-text">2.浮点数表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-IEEE-754%E6%A0%87%E5%87%86"><span class="toc-text">3.IEEE 754标准</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E7%9A%84%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%EF%BC%9ABCD%E7%A0%81"><span class="toc-text">三、二进制编码的十进制数：BCD码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE%E7%9A%84%E7%BC%96%E7%A0%81"><span class="toc-text">非数值数据的编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ASCII%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">1.ASCII字符编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%B1%89%E5%AD%97%E7%BC%96%E7%A0%81"><span class="toc-text">2.汉字编码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A3%80%E9%94%99%E4%B8%8E%E7%BA%A0%E9%94%99%E7%A0%81"><span class="toc-text">检错与纠错码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%A5%87%E5%81%B6%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-text">一、奇偶校验码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-text">二、循环冗余校验码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B5%B7%E6%98%8E%E7%A0%81"><span class="toc-text">三、海明码</span></a></li></ol>
       </div>
     </article>
   
@@ -418,7 +547,7 @@
       <a href="/categories/programming/">
         <div class="categories-list-item">
           programming
-          <span class="categories-list-item-badge">9</span>
+          <span class="categories-list-item-badge">10</span>
         </div>
       </a>
     
@@ -437,15 +566,15 @@
   <div class="tags-list">
     
       <a 
-        href="/tags/Java%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" 
-        title="Java程序设计">
-        <div class="tags-list-item">Java程序设计</div>
-      </a>
-    
-      <a 
         href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" 
         title="计算机组成与系统结构">
         <div class="tags-list-item">计算机组成与系统结构</div>
+      </a>
+    
+      <a 
+        href="/tags/Java%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" 
+        title="Java程序设计">
+        <div class="tags-list-item">Java程序设计</div>
       </a>
     
   </div>
@@ -466,7 +595,7 @@
     style="padding-right: 2px;">
   </i>TOC
 </div>
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE%E7%9A%84%E7%BC%96%E7%A0%81"><span class="toc-text">一、数值数据的编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%9A%E7%82%B9%E4%B8%8E%E6%B5%AE%E7%82%B9%E8%A1%A8%E7%A4%BA"><span class="toc-text">二、数据的定点与浮点表示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B5%AE%E7%82%B9%E6%95%B0%E8%A1%A8%E7%A4%BA"><span class="toc-text">2.浮点数表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-IEEE-754%E6%A0%87%E5%87%86"><span class="toc-text">3.IEEE 754标准</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%E7%9A%84%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%EF%BC%9ABCD%E7%A0%81"><span class="toc-text">三、二进制编码的十进制数：BCD码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE%E7%9A%84%E7%BC%96%E7%A0%81"><span class="toc-text">非数值数据的编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ASCII%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">1.ASCII字符编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%B1%89%E5%AD%97%E7%BC%96%E7%A0%81"><span class="toc-text">2.汉字编码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A3%80%E9%94%99%E4%B8%8E%E7%BA%A0%E9%94%99%E7%A0%81"><span class="toc-text">检错与纠错码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%A5%87%E5%81%B6%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-text">一、奇偶校验码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C%E7%A0%81"><span class="toc-text">二、循环冗余校验码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B5%B7%E6%98%8E%E7%A0%81"><span class="toc-text">三、海明码</span></a></li></ol>
     </article>
   
   
