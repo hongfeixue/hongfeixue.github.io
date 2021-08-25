@@ -45,11 +45,15 @@
         content="2021-08-17">
       <meta 
         property="og:article:modified_time" 
-        content="2021-08-17">
+        content="2021-08-25">
       <meta 
         property="og:article:author" 
         content="xuehongfei">
       
+        
+          <meta 
+            property="og:article:tag" 
+            content="计算机组成与系统结构">
         
       
     
@@ -272,17 +276,193 @@
       <span>2021-08-17</span>
     </time>
     
+      <span class="dot"></span>
+      
+        <a 
+          href="/categories/programming/" 
+          class="post-meta-link">
+          编程
+        </a>
+      
+    
     
       <span class="dot"></span>
-      <span>0 words</span>
+      <span>1k words</span>
     
   </div>
+  
+    <div 
+      class="post-meta post-show-meta" 
+      style="margin-top: -10px;">
+      <div style="display: flex; align-items: center;">
+        <i 
+          class="iconfont icon-biaoqian" 
+          style="margin-right: 2px; font-size: 1.15rem;">
+        </i>
+        
+          
+          <a 
+            href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" 
+            class="post-meta-link">
+            计算机组成与系统结构
+          </a>
+        
+      </div>
+    </div>
   
   </header>
   <div 
     id="section" 
     class="post-content">
-    
+    <h1 id="运算方法与运算器"><a href="#运算方法与运算器" class="headerlink" title="运算方法与运算器"></a>运算方法与运算器</h1><h2 id="3-1定点数的运算"><a href="#3-1定点数的运算" class="headerlink" title="3.1定点数的运算"></a>3.1定点数的运算</h2><h3 id="3-1-1加减运算"><a href="#3-1-1加减运算" class="headerlink" title="3.1.1加减运算"></a>3.1.1加减运算</h3><p>补码加减法的依据：</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808205219751-162860158460612.png" alt="image-20210808205219751" style="zoom: 50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808205219751-162860158460612.png" class="lozad post-image">
+
+<h4 id="1-加减运算方法"><a href="#1-加减运算方法" class="headerlink" title="1.加减运算方法"></a>1.加减运算方法</h4><ul>
+<li>参加运算的操作数用补码表示；</li>
+<li>补码的符号位与数值位同时进行加运算：<ul>
+<li>加：两数补码直接相加；</li>
+<li>减：减数补码连同符号位一起按位取反，末位加1；在与被减数的补码相加。</li>
+</ul>
+</li>
+<li>运算结果即为和/差的补码。</li>
+</ul>
+<h4 id="2-溢出判断"><a href="#2-溢出判断" class="headerlink" title="2.溢出判断"></a>2.溢出判断</h4><p>1）双符号位判决法</p>
+<p>若运算结果两符号分别用S2S1表示，则判别溢出的逻辑表达式为：VF = S1异或S2</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808210941295-162860158620413.png" alt="image-20210808210941295" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808210941295-162860158620413.png" class="lozad post-image">
+
+<p>2）进位判决法</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808211257017-162860158830214.png" alt="image-20210808211257017" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808211257017-162860158830214.png" class="lozad post-image">
+
+<p>3）根据运算结果的符号为和进位标志判别</p>
+<p>4）根据运算前后的符号位进行判断</p>
+<p>一旦溢出发生，则会</p>
+<ul>
+<li>在CPU中的标志寄存器中建立溢出标志；</li>
+<li>或者产生溢出中断。</li>
+</ul>
+<h4 id="3-一位全加器的实现"><a href="#3-一位全加器的实现" class="headerlink" title="3.一位全加器的实现"></a>3.一位全加器的实现</h4><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808212430199-162860159004515.png" alt="image-20210808212430199" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808212430199-162860159004515.png" class="lozad post-image">
+
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808212731342.png" alt="image-20210808212731342" style="zoom:25%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808212731342.png" class="lozad post-image">
+
+<p>1）行波进位加法器</p>
+<p>行波进位的4位加法器：</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808212938271-162860159156516.png" alt="image-20210808212938271" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808212938271-162860159156516.png" class="lozad post-image">
+
+<p>2）先行进位加法器  </p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808215334133-162860159379517.png" alt="image-20210808215334133" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808215334133-162860159379517.png" class="lozad post-image">
+
+<h4 id="5-8421-BCD数加法器"><a href="#5-8421-BCD数加法器" class="headerlink" title="5.8421 BCD数加法器"></a>5.8421 BCD数加法器</h4><p>BCD加法的矫正：</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808222314843-162860159574418.png" alt="image-20210808222314843" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808222314843-162860159574418.png" class="lozad post-image">
+
+<h4 id="6-移码加减运算"><a href="#6-移码加减运算" class="headerlink" title="6.移码加减运算"></a>6.移码加减运算</h4><p>对两移码求和差时，首先对该两移码求和差；</p>
+<p>对结果进行修正——将结果的符号取反。</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808223023637-162860159729319.png" alt="image-20210808223023637" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808223023637-162860159729319.png" class="lozad post-image">
+
+<h3 id="3-1-2乘法运算"><a href="#3-1-2乘法运算" class="headerlink" title="3.1.2乘法运算"></a>3.1.2乘法运算</h3><h4 id="1-原码乘法运算"><a href="#1-原码乘法运算" class="headerlink" title="1.原码乘法运算"></a>1.原码乘法运算</h4><p>1）原码一位乘法的法则</p>
+<p>乘积的符号为被乘数的符号位与乘数的符号位相异或；</p>
+<p>乘积的绝对值为被乘数的绝对值与乘数的绝对值之积。<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808223556835.png" alt="image-20210808223556835" style="zoom:25%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808223556835.png" class="lozad post-image"></p>
+<p>2）原码一位乘法的实现思路</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808224111298-162860159897320.png" alt="image-20210808224111298" style="zoom:25%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808224111298-162860159897320.png" class="lozad post-image">
+
+<p>3）原码一位乘法的运算过程</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808224205061-162860160054721.png" alt="image-20210808224205061" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808224205061-162860160054721.png" class="lozad post-image">
+
+<p>4）原码一位乘法器框图</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808224623175.png" alt="image-20210808224623175" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210808224623175.png" class="lozad post-image">
+
+<h4 id="2-补码乘法运算"><a href="#2-补码乘法运算" class="headerlink" title="2.补码乘法运算"></a>2.补码乘法运算</h4><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809220046893.png" alt="image-20210809220046893" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809220046893.png" class="lozad post-image">
+
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809220615677-162860157705410.png" alt="image-20210809220615677" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809220615677-162860157705410.png" class="lozad post-image">
+
+<p>2）布斯法</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809220938916-162860157924111.png" alt="image-20210809220938916" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809220938916-162860157924111.png" class="lozad post-image">
+
+<p>补码一位乘运算规律：<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809223502684-16286015740899.png" alt="image-20210809223502684" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809223502684-16286015740899.png" class="lozad post-image"></p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809221747696-16286015728628.png" alt="image-20210809221747696" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809221747696-16286015728628.png" class="lozad post-image">
+
+<p>补码一位乘法器（Booth算法）框图：</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809225124760-16286015716407.png" alt="image-20210809225124760" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809225124760-16286015716407.png" class="lozad post-image">
+
+<h4 id="3-阵列乘法器"><a href="#3-阵列乘法器" class="headerlink" title="3.阵列乘法器"></a>3.阵列乘法器</h4><p>1）手算及单元电路</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809234946121-16286015696756.png" alt="image-20210809234946121" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809234946121-16286015696756.png" class="lozad post-image">
+
+<p>2）绝对值（无符号数）阵列乘法器</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809235107364-16286015684945.png" alt="image-20210809235107364" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809235107364-16286015684945.png" class="lozad post-image">
+
+<p>3）带符号数的阵列乘法器</p>
+<p>求补电路：E为低电平0，输入输出一样；E为高电平，输出按位取反加一。</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809235604397-16286015669104.png" alt="image-20210809235604397" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809235604397-16286015669104.png" class="lozad post-image">
+
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809235753917-16286015656203.png" alt="image-20210809235753917" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210809235753917-16286015656203.png" class="lozad post-image">
+
+<h3 id="3-1-3除法运算"><a href="#3-1-3除法运算" class="headerlink" title="3.1.3除法运算"></a>3.1.3除法运算</h3><p>实现方式： 原码，补码（不要求）</p>
+<p>前提条件：除数不能为0 ，商可以表示</p>
+<h4 id="1-原码除法运算"><a href="#1-原码除法运算" class="headerlink" title="1.原码除法运算"></a>1.原码除法运算</h4><p>1）原码除法的法则</p>
+<ul>
+<li>除数 != 0</li>
+<li>定点纯小数时，|被除数| &lt; |除数|</li>
+<li>定点纯整数时，|被除数| &gt;=|除数|</li>
+<li>商的符号=被除数的符号 异或 除数的符号</li>
+<li>商| = |被除数| / |除数|</li>
+<li>将商的符号与商的值拼接在一起</li>
+<li><img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810205033055-16286015580322.png" alt="image-20210810205033055" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810205033055-16286015580322.png" class="lozad post-image"></li>
+</ul>
+<p>2）恢复余数法</p>
+<p>判断溢出：被除数前四位是否小于除数</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810210726625-16286015551921.png" alt="image-20210810210726625" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810210726625-16286015551921.png" class="lozad post-image">
+
+<p>3）加减交替法</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810212236386.png" alt="image-20210810212236386" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810212236386.png" class="lozad post-image">
+
+<p>加减交替法的运算法则：</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810212428314.png" alt="image-20210810212428314" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810212428314.png" class="lozad post-image">
+
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810220455628.png" alt="image-20210810220455628" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810220455628.png" class="lozad post-image">
+
+
+
+<p>加减交替法除法器框图：<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810220751042.png" alt="image-20210810220751042" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810220751042.png" class="lozad post-image"></p>
+<h4 id="3-阵列除法器"><a href="#3-阵列除法器" class="headerlink" title="3.阵列除法器"></a>3.阵列除法器</h4><h2 id="3-2算数逻辑部件"><a href="#3-2算数逻辑部件" class="headerlink" title="3.2算数逻辑部件"></a>3.2算数逻辑部件</h2><h3 id="3-2-2算术逻辑部件"><a href="#3-2-2算术逻辑部件" class="headerlink" title="3.2.2算术逻辑部件"></a>3.2.2算术逻辑部件</h3><p>74LS181（4位ALU）</p>
+<h3 id="3-2-3运算器的结构"><a href="#3-2-3运算器的结构" class="headerlink" title="3.2.3运算器的结构"></a>3.2.3运算器的结构</h3><h4 id="1-3种基本结构"><a href="#1-3种基本结构" class="headerlink" title="1. 3种基本结构"></a>1. 3种基本结构</h4><p>单总线结构、双总线结构、三总线结构<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810224050807.png" alt="image-20210810224050807" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810224050807.png" class="lozad post-image"></p>
+<h4 id="2-计算机简单框图"><a href="#2-计算机简单框图" class="headerlink" title="2.计算机简单框图"></a>2.计算机简单框图</h4><h2 id="3-3浮点运算"><a href="#3-3浮点运算" class="headerlink" title="3.3浮点运算"></a>3.3浮点运算</h2><h3 id="3-3-1加减运算"><a href="#3-3-1加减运算" class="headerlink" title="3.3.1加减运算"></a>3.3.1加减运算</h3><h4 id="1-浮点数加减法的运算法则"><a href="#1-浮点数加减法的运算法则" class="headerlink" title="1.浮点数加减法的运算法则"></a>1.浮点数加减法的运算法则</h4><ul>
+<li><p>对阶：小阶对大阶——小阶码+1，尾数右移1位，直到增大到与大阶码相同。</p>
+</li>
+<li><p>尾数加减运算：加法；减法：减数的符号取反（求补），与被减数相加。</p>
+</li>
+<li><p>规格化</p>
+<ul>
+<li>左规：<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810225651716.png" alt="image-20210810225651716" style="zoom:25%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810225651716.png" class="lozad post-image"></li>
+<li>右规：<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810225758803.png" alt="image-20210810225758803" style="zoom:25%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810225758803.png" class="lozad post-image"></li>
+</ul>
+</li>
+<li><p>舍入处理</p>
+<ul>
+<li>截（尾）断法： 将需丢弃的尾数低位丢弃。</li>
+<li>末位恒置1法：使要保留的尾数最低位永远为1。</li>
+<li>0舍1入法：<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810230145421.png" alt="image-20210810230145421" style="zoom:25%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810230145421.png" class="lozad post-image"></li>
+</ul>
+</li>
+</ul>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810230443887.png" alt="image-20210810230443887" style="zoom:50%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210810230443887.png" class="lozad post-image">
+
+<h4 id="3-浮点运算实例"><a href="#3-浮点运算实例" class="headerlink" title="3.浮点运算实例"></a>3.浮点运算实例</h4><h3 id="3-3-2乘除运算"><a href="#3-3-2乘除运算" class="headerlink" title="3.3.2乘除运算"></a>3.3.2乘除运算</h3><h4 id="1-浮点乘法运算"><a href="#1-浮点乘法运算" class="headerlink" title="1.浮点乘法运算"></a>1.浮点乘法运算</h4><ul>
+<li>两乘数一定是规格化数。若一个乘数为0，则乘积必为0。</li>
+<li>求乘积的阶码：Ez = Ex + Ey; 判断积的阶码是否溢出：上溢，下溢。</li>
+<li>求乘积的尾数：两乘数的尾数相乘。</li>
+<li>规格化乘积的尾数。<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210811225500046.png" alt="image-20210811225500046" style="zoom:33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210811225500046.png" class="lozad post-image"></li>
+</ul>
+<p>浮点乘法流程图：</p>
+<img src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210811225711509.png" alt="image-20210811225711509" style="zoom: 33%;" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210811225711509.png" class="lozad post-image">
+
+<h4 id="2-浮点除法运算"><a href="#2-浮点除法运算" class="headerlink" title="2.浮点除法运算"></a>2.浮点除法运算</h4><ul>
+<li>被除数、除数一定是规格化数。若被除数为0，则商必为0。</li>
+<li>求商的阶码：Ez = Ex - Ey; 判断商的阶码是否溢出：上溢，下溢。</li>
+<li>求商的尾数：Mz = Mx / My。</li>
+<li>规格化商的尾数。<img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210811230014972.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210811230014972.png"></li>
+</ul>
+<p>浮点除法流程图：</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210811230729257.png" class="lozad post-image"src="https://myblog-xhf18.oss-cn-beijing.aliyuncs.com/img/image-20210811230729257.png"></p>
+
   </div>
   <div>
     
@@ -352,7 +532,7 @@
     style="padding-right: 2px;">
   </i>TOC
 </div>
-
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E6%96%B9%E6%B3%95%E4%B8%8E%E8%BF%90%E7%AE%97%E5%99%A8"><span class="toc-text">运算方法与运算器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-text">3.1定点数的运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-text">3.1.1加减运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-text">1.加减运算方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%BA%A2%E5%87%BA%E5%88%A4%E6%96%AD"><span class="toc-text">2.溢出判断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%80%E4%BD%8D%E5%85%A8%E5%8A%A0%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">3.一位全加器的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-8421-BCD%E6%95%B0%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="toc-text">5.8421 BCD数加法器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E7%A7%BB%E7%A0%81%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-text">6.移码加减运算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">3.1.2乘法运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8E%9F%E7%A0%81%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">1.原码乘法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%A1%A5%E7%A0%81%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">2.补码乘法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%98%B5%E5%88%97%E4%B9%98%E6%B3%95%E5%99%A8"><span class="toc-text">3.阵列乘法器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">3.1.3除法运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8E%9F%E7%A0%81%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">1.原码除法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%98%B5%E5%88%97%E9%99%A4%E6%B3%95%E5%99%A8"><span class="toc-text">3.阵列除法器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2%E7%AE%97%E6%95%B0%E9%80%BB%E8%BE%91%E9%83%A8%E4%BB%B6"><span class="toc-text">3.2算数逻辑部件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E9%83%A8%E4%BB%B6"><span class="toc-text">3.2.2算术逻辑部件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3%E8%BF%90%E7%AE%97%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">3.2.3运算器的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3%E7%A7%8D%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-text">1. 3种基本结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%80%E5%8D%95%E6%A1%86%E5%9B%BE"><span class="toc-text">2.计算机简单框图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97"><span class="toc-text">3.3浮点运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-text">3.3.1加减运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%B5%AE%E7%82%B9%E6%95%B0%E5%8A%A0%E5%87%8F%E6%B3%95%E7%9A%84%E8%BF%90%E7%AE%97%E6%B3%95%E5%88%99"><span class="toc-text">1.浮点数加减法的运算法则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97%E5%AE%9E%E4%BE%8B"><span class="toc-text">3.浮点运算实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2%E4%B9%98%E9%99%A4%E8%BF%90%E7%AE%97"><span class="toc-text">3.3.2乘除运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%B5%AE%E7%82%B9%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">1.浮点乘法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B5%AE%E7%82%B9%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">2.浮点除法运算</span></a></li></ol></li></ol></li></ol></li></ol>
 </div></main>
             <aside class="left-column">
               
@@ -400,7 +580,7 @@
     style="padding-right: 2px;">
   </i>TOC
 </div>
-
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E6%96%B9%E6%B3%95%E4%B8%8E%E8%BF%90%E7%AE%97%E5%99%A8"><span class="toc-text">运算方法与运算器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-text">3.1定点数的运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-text">3.1.1加减运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-text">1.加减运算方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%BA%A2%E5%87%BA%E5%88%A4%E6%96%AD"><span class="toc-text">2.溢出判断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%80%E4%BD%8D%E5%85%A8%E5%8A%A0%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">3.一位全加器的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-8421-BCD%E6%95%B0%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="toc-text">5.8421 BCD数加法器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E7%A7%BB%E7%A0%81%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-text">6.移码加减运算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">3.1.2乘法运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8E%9F%E7%A0%81%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">1.原码乘法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%A1%A5%E7%A0%81%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">2.补码乘法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%98%B5%E5%88%97%E4%B9%98%E6%B3%95%E5%99%A8"><span class="toc-text">3.阵列乘法器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">3.1.3除法运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8E%9F%E7%A0%81%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">1.原码除法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%98%B5%E5%88%97%E9%99%A4%E6%B3%95%E5%99%A8"><span class="toc-text">3.阵列除法器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2%E7%AE%97%E6%95%B0%E9%80%BB%E8%BE%91%E9%83%A8%E4%BB%B6"><span class="toc-text">3.2算数逻辑部件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E9%83%A8%E4%BB%B6"><span class="toc-text">3.2.2算术逻辑部件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3%E8%BF%90%E7%AE%97%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">3.2.3运算器的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3%E7%A7%8D%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-text">1. 3种基本结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%80%E5%8D%95%E6%A1%86%E5%9B%BE"><span class="toc-text">2.计算机简单框图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97"><span class="toc-text">3.3浮点运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-text">3.3.1加减运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%B5%AE%E7%82%B9%E6%95%B0%E5%8A%A0%E5%87%8F%E6%B3%95%E7%9A%84%E8%BF%90%E7%AE%97%E6%B3%95%E5%88%99"><span class="toc-text">1.浮点数加减法的运算法则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97%E5%AE%9E%E4%BE%8B"><span class="toc-text">3.浮点运算实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2%E4%B9%98%E9%99%A4%E8%BF%90%E7%AE%97"><span class="toc-text">3.3.2乘除运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%B5%AE%E7%82%B9%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">1.浮点乘法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B5%AE%E7%82%B9%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">2.浮点除法运算</span></a></li></ol></li></ol></li></ol></li></ol>
       </div>
     </article>
   
@@ -418,7 +598,7 @@
       <a href="/categories/programming/">
         <div class="categories-list-item">
           programming
-          <span class="categories-list-item-badge">8</span>
+          <span class="categories-list-item-badge">9</span>
         </div>
       </a>
     
@@ -466,7 +646,7 @@
     style="padding-right: 2px;">
   </i>TOC
 </div>
-
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E6%96%B9%E6%B3%95%E4%B8%8E%E8%BF%90%E7%AE%97%E5%99%A8"><span class="toc-text">运算方法与运算器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-text">3.1定点数的运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-text">3.1.1加减运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-text">1.加减运算方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%BA%A2%E5%87%BA%E5%88%A4%E6%96%AD"><span class="toc-text">2.溢出判断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%80%E4%BD%8D%E5%85%A8%E5%8A%A0%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">3.一位全加器的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-8421-BCD%E6%95%B0%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="toc-text">5.8421 BCD数加法器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E7%A7%BB%E7%A0%81%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-text">6.移码加减运算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">3.1.2乘法运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8E%9F%E7%A0%81%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">1.原码乘法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%A1%A5%E7%A0%81%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">2.补码乘法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%98%B5%E5%88%97%E4%B9%98%E6%B3%95%E5%99%A8"><span class="toc-text">3.阵列乘法器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">3.1.3除法运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8E%9F%E7%A0%81%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">1.原码除法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%98%B5%E5%88%97%E9%99%A4%E6%B3%95%E5%99%A8"><span class="toc-text">3.阵列除法器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2%E7%AE%97%E6%95%B0%E9%80%BB%E8%BE%91%E9%83%A8%E4%BB%B6"><span class="toc-text">3.2算数逻辑部件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E9%83%A8%E4%BB%B6"><span class="toc-text">3.2.2算术逻辑部件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3%E8%BF%90%E7%AE%97%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">3.2.3运算器的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3%E7%A7%8D%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-text">1. 3种基本结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%AE%80%E5%8D%95%E6%A1%86%E5%9B%BE"><span class="toc-text">2.计算机简单框图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97"><span class="toc-text">3.3浮点运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1%E5%8A%A0%E5%87%8F%E8%BF%90%E7%AE%97"><span class="toc-text">3.3.1加减运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%B5%AE%E7%82%B9%E6%95%B0%E5%8A%A0%E5%87%8F%E6%B3%95%E7%9A%84%E8%BF%90%E7%AE%97%E6%B3%95%E5%88%99"><span class="toc-text">1.浮点数加减法的运算法则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97%E5%AE%9E%E4%BE%8B"><span class="toc-text">3.浮点运算实例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2%E4%B9%98%E9%99%A4%E8%BF%90%E7%AE%97"><span class="toc-text">3.3.2乘除运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%B5%AE%E7%82%B9%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">1.浮点乘法运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B5%AE%E7%82%B9%E9%99%A4%E6%B3%95%E8%BF%90%E7%AE%97"><span class="toc-text">2.浮点除法运算</span></a></li></ol></li></ol></li></ol></li></ol>
     </article>
   
   
